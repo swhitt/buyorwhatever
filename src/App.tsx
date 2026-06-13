@@ -24,6 +24,13 @@ const insurance = insuranceRaw as unknown as PropertyTaxTable;
 
 const usHome = locations.find((l) => l.id === "united-states") ?? locations[0];
 const METRO_KEY = "bow:metro";
+const OVERRIDES_KEY = "bow:overrides";
+
+// Manual edits we remember across reloads.
+const PERSIST_FIELDS = ["homePrice", "downPaymentPct", "propertyTaxRate", "marginalTaxRate"] as const;
+// Of those, the ones tied to a specific place: cleared when you pick a new metro
+// (the override was for the old location). The rest are personal and always stick.
+const LOCATION_FIELDS: (keyof CalcInputs)[] = ["homePrice", "propertyTaxRate"];
 
 // Returning visitors keep their last metro (no flash, no re-detect).
 function storedLocation(): LocationData {
@@ -36,23 +43,67 @@ function storedLocation(): LocationData {
   return usHome;
 }
 
+function loadOverrides(): Partial<CalcInputs> {
+  try {
+    const raw = localStorage.getItem(OVERRIDES_KEY);
+    if (raw) return JSON.parse(raw) as Partial<CalcInputs>;
+  } catch {
+    /* storage unavailable or malformed */
+  }
+  return {};
+}
+
+function saveOverrides(o: Partial<CalcInputs>) {
+  try {
+    localStorage.setItem(OVERRIDES_KEY, JSON.stringify(o));
+  } catch {
+    /* storage unavailable */
+  }
+}
+
 export function App() {
+  const overrides = useRef<Partial<CalcInputs>>(loadOverrides());
   const [selected, setSelected] = useState<LocationData>(storedLocation);
-  const [inputs, setInputs] = useState<CalcInputs>(() =>
-    buildInputs(storedLocation(), market, propertyTax, insurance),
-  );
+  const [inputs, setInputs] = useState<CalcInputs>(() => ({
+    ...buildInputs(storedLocation(), market, propertyTax, insurance),
+    ...overrides.current, // restore the user's remembered manual edits
+  }));
 
   const result = useMemo(() => calculate(inputs), [inputs]);
-  const patch = (p: Partial<CalcInputs>) => setInputs((prev) => ({ ...prev, ...p }));
+
+  // Manual edits from the controls. Persist the ones we remember.
+  const patch = (p: Partial<CalcInputs>) => {
+    setInputs((prev) => ({ ...prev, ...p }));
+    let changed = false;
+    for (const k of PERSIST_FIELDS) {
+      if (k in p) {
+        overrides.current[k] = p[k] as never;
+        changed = true;
+      }
+    }
+    if (changed) saveOverrides(overrides.current);
+  };
 
   function selectLocation(loc: LocationData, remember = true) {
     setSelected(loc);
-    patch({
+    // Set location-derived fields directly (not via patch) so they aren't
+    // recorded as manual overrides.
+    setInputs((prev) => ({
+      ...prev,
       homePrice: loc.homeValue,
       monthlyRent: loc.rent,
-      propertyTaxRate: propertyTax[loc.state] ?? inputs.propertyTaxRate,
-      homeInsuranceRate: insurance[loc.state] ?? inputs.homeInsuranceRate,
-    });
+      propertyTaxRate: propertyTax[loc.state] ?? prev.propertyTaxRate,
+      homeInsuranceRate: insurance[loc.state] ?? prev.homeInsuranceRate,
+    }));
+    // A new place invalidates place-specific overrides (kept personal ones).
+    let changed = false;
+    for (const k of LOCATION_FIELDS) {
+      if (k in overrides.current) {
+        delete overrides.current[k];
+        changed = true;
+      }
+    }
+    if (changed) saveOverrides(overrides.current);
     if (remember) {
       try {
         localStorage.setItem(METRO_KEY, loc.id);
