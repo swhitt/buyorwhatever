@@ -1,0 +1,26 @@
+{
+  "asOf": "2026-06-13",
+  "mortgage": {
+    "rate30": 0.0652,
+    "rate15": 0.0584,
+    "asOf": "2026-06-11",
+    "source": "Freddie Mac PMMS"
+  },
+  "inflation": {
+    "rate": 0.0425,
+    "asOf": "2026-05",
+    "source": "BLS CPI-U (CUUR0000SA0), YoY"
+  },
+  "appreciation": {
+    "rate1yr": 0.0061,
+    "rate5yrCagr": 0.0502,
+    "asOf": "2026-04",
+    "source": "Zillow ZHVI (US), CAGR"
+  },
+  "national": {
+    "homeValue": 368198,
+    "rent": 1930,
+    "asOf": "2026-04",
+    "source": "Zillow ZHVI/ZORI (US)"
+  }
+}

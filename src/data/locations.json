@@ -1,0 +1,3210 @@
+[
+  {
+    "id": "united-states",
+    "metro": "United States",
+    "state": "US",
+    "homeValue": 368198,
+    "rent": 1930,
+    "appreciation5yr": 0.0502
+  },
+  {
+    "id": "new-york-ny",
+    "metro": "New York, NY",
+    "state": "NY",
+    "homeValue": 718397,
+    "rent": 3406,
+    "appreciation5yr": 0.0536
+  },
+  {
+    "id": "los-angeles-ca",
+    "metro": "Los Angeles, CA",
+    "state": "CA",
+    "homeValue": 969589,
+    "rent": 2892,
+    "appreciation5yr": 0.049
+  },
+  {
+    "id": "chicago-il",
+    "metro": "Chicago, IL",
+    "state": "IL",
+    "homeValue": 349901,
+    "rent": 2219,
+    "appreciation5yr": 0.0542
+  },
+  {
+    "id": "dallas-tx",
+    "metro": "Dallas, TX",
+    "state": "TX",
+    "homeValue": 366743,
+    "rent": 1660,
+    "appreciation5yr": 0.0393
+  },
+  {
+    "id": "houston-tx",
+    "metro": "Houston, TX",
+    "state": "TX",
+    "homeValue": 308211,
+    "rent": 1619,
+    "appreciation5yr": 0.0379
+  },
+  {
+    "id": "washington-dc",
+    "metro": "Washington, DC",
+    "state": "VA",
+    "homeValue": 582461,
+    "rent": 2375,
+    "appreciation5yr": 0.0314
+  },
+  {
+    "id": "philadelphia-pa",
+    "metro": "Philadelphia, PA",
+    "state": "PA",
+    "homeValue": 386647,
+    "rent": 1901,
+    "appreciation5yr": 0.0562
+  },
+  {
+    "id": "miami-fl",
+    "metro": "Miami, FL",
+    "state": "FL",
+    "homeValue": 473725,
+    "rent": 2683,
+    "appreciation5yr": 0.0673
+  },
+  {
+    "id": "atlanta-ga",
+    "metro": "Atlanta, GA",
+    "state": "GA",
+    "homeValue": 381835,
+    "rent": 1825,
+    "appreciation5yr": 0.0517
+  },
+  {
+    "id": "boston-ma",
+    "metro": "Boston, MA",
+    "state": "MA",
+    "homeValue": 736881,
+    "rent": 3184,
+    "appreciation5yr": 0.05
+  },
+  {
+    "id": "phoenix-az",
+    "metro": "Phoenix, AZ",
+    "state": "AZ",
+    "homeValue": 448933,
+    "rent": 1741,
+    "appreciation5yr": 0.0401
+  },
+  {
+    "id": "san-francisco-ca",
+    "metro": "San Francisco, CA",
+    "state": "CA",
+    "homeValue": 1145541,
+    "rent": 3206,
+    "appreciation5yr": 0.0145
+  },
+  {
+    "id": "riverside-ca",
+    "metro": "Riverside, CA",
+    "state": "CA",
+    "homeValue": 586623,
+    "rent": 2510,
+    "appreciation5yr": 0.0507
+  },
+  {
+    "id": "detroit-mi",
+    "metro": "Detroit, MI",
+    "state": "MI",
+    "homeValue": 266496,
+    "rent": 1481,
+    "appreciation5yr": 0.0496
+  },
+  {
+    "id": "seattle-wa",
+    "metro": "Seattle, WA",
+    "state": "WA",
+    "homeValue": 755116,
+    "rent": 2208,
+    "appreciation5yr": 0.0361
+  },
+  {
+    "id": "minneapolis-mn",
+    "metro": "Minneapolis, MN",
+    "state": "MN",
+    "homeValue": 391192,
+    "rent": 1698,
+    "appreciation5yr": 0.0301
+  },
+  {
+    "id": "san-diego-ca",
+    "metro": "San Diego, CA",
+    "state": "CA",
+    "homeValue": 943055,
+    "rent": 2914,
+    "appreciation5yr": 0.055
+  },
+  {
+    "id": "tampa-fl",
+    "metro": "Tampa, FL",
+    "state": "FL",
+    "homeValue": 359150,
+    "rent": 1997,
+    "appreciation5yr": 0.0523
+  },
+  {
+    "id": "denver-co",
+    "metro": "Denver, CO",
+    "state": "CO",
+    "homeValue": 575130,
+    "rent": 1887,
+    "appreciation5yr": 0.0235
+  },
+  {
+    "id": "baltimore-md",
+    "metro": "Baltimore, MD",
+    "state": "MD",
+    "homeValue": 402887,
+    "rent": 1894,
+    "appreciation5yr": 0.0364
+  },
+  {
+    "id": "st-louis-mo",
+    "metro": "St. Louis, MO",
+    "state": "MO",
+    "homeValue": 273427,
+    "rent": 1436,
+    "appreciation5yr": 0.0508
+  },
+  {
+    "id": "orlando-fl",
+    "metro": "Orlando, FL",
+    "state": "FL",
+    "homeValue": 386582,
+    "rent": 1963,
+    "appreciation5yr": 0.0553
+  },
+  {
+    "id": "charlotte-nc",
+    "metro": "Charlotte, NC",
+    "state": "NC",
+    "homeValue": 388846,
+    "rent": 1733,
+    "appreciation5yr": 0.0589
+  },
+  {
+    "id": "san-antonio-tx",
+    "metro": "San Antonio, TX",
+    "state": "TX",
+    "homeValue": 280170,
+    "rent": 1398,
+    "appreciation5yr": 0.0257
+  },
+  {
+    "id": "portland-or",
+    "metro": "Portland, OR",
+    "state": "OR",
+    "homeValue": 551941,
+    "rent": 1789,
+    "appreciation5yr": 0.0239
+  },
+  {
+    "id": "sacramento-ca",
+    "metro": "Sacramento, CA",
+    "state": "CA",
+    "homeValue": 581956,
+    "rent": 2258,
+    "appreciation5yr": 0.0233
+  },
+  {
+    "id": "pittsburgh-pa",
+    "metro": "Pittsburgh, PA",
+    "state": "PA",
+    "homeValue": 228113,
+    "rent": 1507,
+    "appreciation5yr": 0.03
+  },
+  {
+    "id": "cincinnati-oh",
+    "metro": "Cincinnati, OH",
+    "state": "OH",
+    "homeValue": 308063,
+    "rent": 1557,
+    "appreciation5yr": 0.0559
+  },
+  {
+    "id": "austin-tx",
+    "metro": "Austin, TX",
+    "state": "TX",
+    "homeValue": 430490,
+    "rent": 1604,
+    "appreciation5yr": 0.0041
+  },
+  {
+    "id": "las-vegas-nv",
+    "metro": "Las Vegas, NV",
+    "state": "NV",
+    "homeValue": 430838,
+    "rent": 1734,
+    "appreciation5yr": 0.0534
+  },
+  {
+    "id": "kansas-city-mo",
+    "metro": "Kansas City, MO",
+    "state": "MO",
+    "homeValue": 326895,
+    "rent": 1526,
+    "appreciation5yr": 0.055
+  },
+  {
+    "id": "columbus-oh",
+    "metro": "Columbus, OH",
+    "state": "OH",
+    "homeValue": 329878,
+    "rent": 1516,
+    "appreciation5yr": 0.0541
+  },
+  {
+    "id": "indianapolis-in",
+    "metro": "Indianapolis, IN",
+    "state": "IN",
+    "homeValue": 293854,
+    "rent": 1517,
+    "appreciation5yr": 0.0556
+  },
+  {
+    "id": "cleveland-oh",
+    "metro": "Cleveland, OH",
+    "state": "OH",
+    "homeValue": 248141,
+    "rent": 1441,
+    "appreciation5yr": 0.0634
+  },
+  {
+    "id": "san-jose-ca",
+    "metro": "San Jose, CA",
+    "state": "CA",
+    "homeValue": 1627300,
+    "rent": 3534,
+    "appreciation5yr": 0.0458
+  },
+  {
+    "id": "nashville-tn",
+    "metro": "Nashville, TN",
+    "state": "TN",
+    "homeValue": 455068,
+    "rent": 1784,
+    "appreciation5yr": 0.0549
+  },
+  {
+    "id": "virginia-beach-va",
+    "metro": "Virginia Beach, VA",
+    "state": "VA",
+    "homeValue": 371148,
+    "rent": 1843,
+    "appreciation5yr": 0.0531
+  },
+  {
+    "id": "providence-ri",
+    "metro": "Providence, RI",
+    "state": "RI",
+    "homeValue": 520157,
+    "rent": 2154,
+    "appreciation5yr": 0.0652
+  },
+  {
+    "id": "jacksonville-fl",
+    "metro": "Jacksonville, FL",
+    "state": "FL",
+    "homeValue": 351554,
+    "rent": 1692,
+    "appreciation5yr": 0.0512
+  },
+  {
+    "id": "milwaukee-wi",
+    "metro": "Milwaukee, WI",
+    "state": "WI",
+    "homeValue": 384264,
+    "rent": 1540,
+    "appreciation5yr": 0.0615
+  },
+  {
+    "id": "oklahoma-city-ok",
+    "metro": "Oklahoma City, OK",
+    "state": "OK",
+    "homeValue": 245682,
+    "rent": 1392,
+    "appreciation5yr": 0.0538
+  },
+  {
+    "id": "raleigh-nc",
+    "metro": "Raleigh, NC",
+    "state": "NC",
+    "homeValue": 438344,
+    "rent": 1674,
+    "appreciation5yr": 0.0549
+  },
+  {
+    "id": "memphis-tn",
+    "metro": "Memphis, TN",
+    "state": "TN",
+    "homeValue": 245951,
+    "rent": 1432,
+    "appreciation5yr": 0.0444
+  },
+  {
+    "id": "richmond-va",
+    "metro": "Richmond, VA",
+    "state": "VA",
+    "homeValue": 393943,
+    "rent": 1736,
+    "appreciation5yr": 0.057
+  },
+  {
+    "id": "louisville-ky",
+    "metro": "Louisville, KY",
+    "state": "KY",
+    "homeValue": 280366,
+    "rent": 1377,
+    "appreciation5yr": 0.0493
+  },
+  {
+    "id": "new-orleans-la",
+    "metro": "New Orleans, LA",
+    "state": "LA",
+    "homeValue": 261919,
+    "rent": 1615,
+    "appreciation5yr": -0.0048
+  },
+  {
+    "id": "salt-lake-city-ut",
+    "metro": "Salt Lake City, UT",
+    "state": "UT",
+    "homeValue": 568981,
+    "rent": 1631,
+    "appreciation5yr": 0.0436
+  },
+  {
+    "id": "hartford-ct",
+    "metro": "Hartford, CT",
+    "state": "CT",
+    "homeValue": 394221,
+    "rent": 1940,
+    "appreciation5yr": 0.08
+  },
+  {
+    "id": "buffalo-ny",
+    "metro": "Buffalo, NY",
+    "state": "NY",
+    "homeValue": 282896,
+    "rent": 1417,
+    "appreciation5yr": 0.0665
+  },
+  {
+    "id": "birmingham-al",
+    "metro": "Birmingham, AL",
+    "state": "AL",
+    "homeValue": 259928,
+    "rent": 1422,
+    "appreciation5yr": 0.0395
+  },
+  {
+    "id": "rochester-ny",
+    "metro": "Rochester, NY",
+    "state": "NY",
+    "homeValue": 278388,
+    "rent": 1576,
+    "appreciation5yr": 0.0781
+  },
+  {
+    "id": "grand-rapids-mi",
+    "metro": "Grand Rapids, MI",
+    "state": "MI",
+    "homeValue": 357822,
+    "rent": 1629,
+    "appreciation5yr": 0.0637
+  },
+  {
+    "id": "tucson-az",
+    "metro": "Tucson, AZ",
+    "state": "AZ",
+    "homeValue": 342604,
+    "rent": 1446,
+    "appreciation5yr": 0.0422
+  },
+  {
+    "id": "urban-honolulu-hi",
+    "metro": "Urban Honolulu, HI",
+    "state": "HI",
+    "homeValue": 850361,
+    "rent": 2918,
+    "appreciation5yr": 0.033
+  },
+  {
+    "id": "tulsa-ok",
+    "metro": "Tulsa, OK",
+    "state": "OK",
+    "homeValue": 252287,
+    "rent": 1342,
+    "appreciation5yr": 0.059
+  },
+  {
+    "id": "fresno-ca",
+    "metro": "Fresno, CA",
+    "state": "CA",
+    "homeValue": 409800,
+    "rent": 1998,
+    "appreciation5yr": 0.0492
+  },
+  {
+    "id": "worcester-ma",
+    "metro": "Worcester, MA",
+    "state": "MA",
+    "homeValue": 478242,
+    "rent": 2178,
+    "appreciation5yr": 0.0623
+  },
+  {
+    "id": "omaha-ne",
+    "metro": "Omaha, NE",
+    "state": "NE",
+    "homeValue": 307774,
+    "rent": 1431,
+    "appreciation5yr": 0.051
+  },
+  {
+    "id": "bridgeport-ct",
+    "metro": "Bridgeport, CT",
+    "state": "CT",
+    "homeValue": 681578,
+    "rent": 2802,
+    "appreciation5yr": 0.0698
+  },
+  {
+    "id": "greenville-sc",
+    "metro": "Greenville, SC",
+    "state": "SC",
+    "homeValue": 312533,
+    "rent": 1549,
+    "appreciation5yr": 0.0609
+  },
+  {
+    "id": "albuquerque-nm",
+    "metro": "Albuquerque, NM",
+    "state": "NM",
+    "homeValue": 350272,
+    "rent": 1485,
+    "appreciation5yr": 0.0634
+  },
+  {
+    "id": "bakersfield-ca",
+    "metro": "Bakersfield, CA",
+    "state": "CA",
+    "homeValue": 363361,
+    "rent": 1786,
+    "appreciation5yr": 0.0577
+  },
+  {
+    "id": "albany-ny",
+    "metro": "Albany, NY",
+    "state": "NY",
+    "homeValue": 364241,
+    "rent": 1672,
+    "appreciation5yr": 0.0631
+  },
+  {
+    "id": "knoxville-tn",
+    "metro": "Knoxville, TN",
+    "state": "TN",
+    "homeValue": 363741,
+    "rent": 1741,
+    "appreciation5yr": 0.0871
+  },
+  {
+    "id": "baton-rouge-la",
+    "metro": "Baton Rouge, LA",
+    "state": "LA",
+    "homeValue": 246900,
+    "rent": 1369,
+    "appreciation5yr": 0.0317
+  },
+  {
+    "id": "mcallen-tx",
+    "metro": "McAllen, TX",
+    "state": "TX",
+    "homeValue": 192808,
+    "rent": 1123,
+    "appreciation5yr": 0.0622
+  },
+  {
+    "id": "new-haven-ct",
+    "metro": "New Haven, CT",
+    "state": "CT",
+    "homeValue": 402814,
+    "rent": 2129,
+    "appreciation5yr": 0.0784
+  },
+  {
+    "id": "el-paso-tx",
+    "metro": "El Paso, TX",
+    "state": "TX",
+    "homeValue": 231422,
+    "rent": 1471,
+    "appreciation5yr": 0.0689
+  },
+  {
+    "id": "allentown-pa",
+    "metro": "Allentown, PA",
+    "state": "PA",
+    "homeValue": 360509,
+    "rent": 1825,
+    "appreciation5yr": 0.0647
+  },
+  {
+    "id": "oxnard-ca",
+    "metro": "Oxnard, CA",
+    "state": "CA",
+    "homeValue": 884324,
+    "rent": 2986,
+    "appreciation5yr": 0.0402
+  },
+  {
+    "id": "columbia-sc",
+    "metro": "Columbia, SC",
+    "state": "SC",
+    "homeValue": 254348,
+    "rent": 1537,
+    "appreciation5yr": 0.0633
+  },
+  {
+    "id": "north-port-fl",
+    "metro": "North Port, FL",
+    "state": "FL",
+    "homeValue": 403701,
+    "rent": 2131,
+    "appreciation5yr": 0.0447
+  },
+  {
+    "id": "charleston-sc",
+    "metro": "Charleston, SC",
+    "state": "SC",
+    "homeValue": 434229,
+    "rent": 2002,
+    "appreciation5yr": 0.0655
+  },
+  {
+    "id": "greensboro-nc",
+    "metro": "Greensboro, NC",
+    "state": "NC",
+    "homeValue": 264302,
+    "rent": 1424,
+    "appreciation5yr": 0.0566
+  },
+  {
+    "id": "stockton-ca",
+    "metro": "Stockton, CA",
+    "state": "CA",
+    "homeValue": 532979,
+    "rent": 2386,
+    "appreciation5yr": 0.0219
+  },
+  {
+    "id": "cape-coral-fl",
+    "metro": "Cape Coral, FL",
+    "state": "FL",
+    "homeValue": 340796,
+    "rent": 1878,
+    "appreciation5yr": 0.0431
+  },
+  {
+    "id": "boise-city-id",
+    "metro": "Boise City, ID",
+    "state": "ID",
+    "homeValue": 493992,
+    "rent": 1813,
+    "appreciation5yr": 0.0209
+  },
+  {
+    "id": "colorado-springs-co",
+    "metro": "Colorado Springs, CO",
+    "state": "CO",
+    "homeValue": 457324,
+    "rent": 1752,
+    "appreciation5yr": 0.0241
+  },
+  {
+    "id": "little-rock-ar",
+    "metro": "Little Rock, AR",
+    "state": "AR",
+    "homeValue": 227259,
+    "rent": 1232,
+    "appreciation5yr": 0.048
+  },
+  {
+    "id": "lakeland-fl",
+    "metro": "Lakeland, FL",
+    "state": "FL",
+    "homeValue": 298610,
+    "rent": 1839,
+    "appreciation5yr": 0.0514
+  },
+  {
+    "id": "akron-oh",
+    "metro": "Akron, OH",
+    "state": "OH",
+    "homeValue": 237677,
+    "rent": 1260,
+    "appreciation5yr": 0.0608
+  },
+  {
+    "id": "des-moines-ia",
+    "metro": "Des Moines, IA",
+    "state": "IA",
+    "homeValue": 293496,
+    "rent": 1287,
+    "appreciation5yr": 0.0461
+  },
+  {
+    "id": "springfield-ma",
+    "metro": "Springfield, MA",
+    "state": "MA",
+    "homeValue": 369950,
+    "rent": 1940,
+    "appreciation5yr": 0.0589
+  },
+  {
+    "id": "ogden-ut",
+    "metro": "Ogden, UT",
+    "state": "UT",
+    "homeValue": 518416,
+    "rent": 1613,
+    "appreciation5yr": 0.0503
+  },
+  {
+    "id": "madison-wi",
+    "metro": "Madison, WI",
+    "state": "WI",
+    "homeValue": 447571,
+    "rent": 1696,
+    "appreciation5yr": 0.0603
+  },
+  {
+    "id": "winston-nc",
+    "metro": "Winston, NC",
+    "state": "NC",
+    "homeValue": 281131,
+    "rent": 1549,
+    "appreciation5yr": 0.0621
+  },
+  {
+    "id": "deltona-fl",
+    "metro": "Deltona, FL",
+    "state": "FL",
+    "homeValue": 329344,
+    "rent": 1782,
+    "appreciation5yr": 0.0472
+  },
+  {
+    "id": "syracuse-ny",
+    "metro": "Syracuse, NY",
+    "state": "NY",
+    "homeValue": 258827,
+    "rent": 1628,
+    "appreciation5yr": 0.0866
+  },
+  {
+    "id": "provo-ut",
+    "metro": "Provo, UT",
+    "state": "UT",
+    "homeValue": 546261,
+    "rent": 1810,
+    "appreciation5yr": 0.0428
+  },
+  {
+    "id": "toledo-oh",
+    "metro": "Toledo, OH",
+    "state": "OH",
+    "homeValue": 199124,
+    "rent": 1256,
+    "appreciation5yr": 0.0522
+  },
+  {
+    "id": "wichita-ks",
+    "metro": "Wichita, KS",
+    "state": "KS",
+    "homeValue": 222066,
+    "rent": 1165,
+    "appreciation5yr": 0.0655
+  },
+  {
+    "id": "durham-nc",
+    "metro": "Durham, NC",
+    "state": "NC",
+    "homeValue": 411727,
+    "rent": 1707,
+    "appreciation5yr": 0.0572
+  },
+  {
+    "id": "augusta-ga",
+    "metro": "Augusta, GA",
+    "state": "GA",
+    "homeValue": 247401,
+    "rent": 1455,
+    "appreciation5yr": 0.0556
+  },
+  {
+    "id": "palm-bay-fl",
+    "metro": "Palm Bay, FL",
+    "state": "FL",
+    "homeValue": 342943,
+    "rent": 1900,
+    "appreciation5yr": 0.0492
+  },
+  {
+    "id": "jackson-ms",
+    "metro": "Jackson, MS",
+    "state": "MS",
+    "homeValue": 212978,
+    "rent": 1444,
+    "appreciation5yr": 0.045
+  },
+  {
+    "id": "harrisburg-pa",
+    "metro": "Harrisburg, PA",
+    "state": "PA",
+    "homeValue": 308987,
+    "rent": 1478,
+    "appreciation5yr": 0.0615
+  },
+  {
+    "id": "spokane-wa",
+    "metro": "Spokane, WA",
+    "state": "WA",
+    "homeValue": 421901,
+    "rent": 1536,
+    "appreciation5yr": 0.0382
+  },
+  {
+    "id": "scranton-pa",
+    "metro": "Scranton, PA",
+    "state": "PA",
+    "homeValue": 223921,
+    "rent": 1339,
+    "appreciation5yr": 0.0594
+  },
+  {
+    "id": "chattanooga-tn",
+    "metro": "Chattanooga, TN",
+    "state": "TN",
+    "homeValue": 324101,
+    "rent": 1511,
+    "appreciation5yr": 0.0607
+  },
+  {
+    "id": "modesto-ca",
+    "metro": "Modesto, CA",
+    "state": "CA",
+    "homeValue": 467963,
+    "rent": 2028,
+    "appreciation5yr": 0.0339
+  },
+  {
+    "id": "lancaster-pa",
+    "metro": "Lancaster, PA",
+    "state": "PA",
+    "homeValue": 385243,
+    "rent": 1523,
+    "appreciation5yr": 0.0663
+  },
+  {
+    "id": "portland-me",
+    "metro": "Portland, ME",
+    "state": "ME",
+    "homeValue": 537646,
+    "rent": 2303,
+    "appreciation5yr": 0.0626
+  },
+  {
+    "id": "youngstown-oh",
+    "metro": "Youngstown, OH",
+    "state": "OH",
+    "homeValue": 172767,
+    "rent": 1032,
+    "appreciation5yr": 0.0716
+  },
+  {
+    "id": "lansing-mi",
+    "metro": "Lansing, MI",
+    "state": "MI",
+    "homeValue": 246754,
+    "rent": 1258,
+    "appreciation5yr": 0.0539
+  },
+  {
+    "id": "fayetteville-ar",
+    "metro": "Fayetteville, AR",
+    "state": "AR",
+    "homeValue": 366485,
+    "rent": 1596,
+    "appreciation5yr": 0.0798
+  },
+  {
+    "id": "fayetteville-nc",
+    "metro": "Fayetteville, NC",
+    "state": "NC",
+    "homeValue": 257381,
+    "rent": 1488,
+    "appreciation5yr": 0.0723
+  },
+  {
+    "id": "lexington-ky",
+    "metro": "Lexington, KY",
+    "state": "KY",
+    "homeValue": 324900,
+    "rent": 1501,
+    "appreciation5yr": 0.0667
+  },
+  {
+    "id": "pensacola-fl",
+    "metro": "Pensacola, FL",
+    "state": "FL",
+    "homeValue": 308870,
+    "rent": 1761,
+    "appreciation5yr": 0.0509
+  },
+  {
+    "id": "santa-rosa-ca",
+    "metro": "Santa Rosa, CA",
+    "state": "CA",
+    "homeValue": 796807,
+    "rent": 2615,
+    "appreciation5yr": 0.016
+  },
+  {
+    "id": "reno-nv",
+    "metro": "Reno, NV",
+    "state": "NV",
+    "homeValue": 567591,
+    "rent": 1937,
+    "appreciation5yr": 0.0375
+  },
+  {
+    "id": "huntsville-al",
+    "metro": "Huntsville, AL",
+    "state": "AL",
+    "homeValue": 314472,
+    "rent": 1369,
+    "appreciation5yr": 0.0459
+  },
+  {
+    "id": "port-st-lucie-fl",
+    "metro": "Port St. Lucie, FL",
+    "state": "FL",
+    "homeValue": 382014,
+    "rent": 2316,
+    "appreciation5yr": 0.0618
+  },
+  {
+    "id": "lafayette-la",
+    "metro": "Lafayette, LA",
+    "state": "LA",
+    "homeValue": 200663,
+    "rent": 1365,
+    "appreciation5yr": 0.0086
+  },
+  {
+    "id": "myrtle-beach-sc",
+    "metro": "Myrtle Beach, SC",
+    "state": "SC",
+    "homeValue": 337830,
+    "rent": 1721,
+    "appreciation5yr": 0.0604
+  },
+  {
+    "id": "springfield-mo",
+    "metro": "Springfield, MO",
+    "state": "MO",
+    "homeValue": 270284,
+    "rent": 1250,
+    "appreciation5yr": 0.0667
+  },
+  {
+    "id": "visalia-ca",
+    "metro": "Visalia, CA",
+    "state": "CA",
+    "homeValue": 361714,
+    "rent": 1733,
+    "appreciation5yr": 0.0517
+  },
+  {
+    "id": "killeen-tx",
+    "metro": "Killeen, TX",
+    "state": "TX",
+    "homeValue": 252395,
+    "rent": 1312,
+    "appreciation5yr": 0.0477
+  },
+  {
+    "id": "asheville-nc",
+    "metro": "Asheville, NC",
+    "state": "NC",
+    "homeValue": 425516,
+    "rent": 1726,
+    "appreciation5yr": 0.0491
+  },
+  {
+    "id": "york-pa",
+    "metro": "York, PA",
+    "state": "PA",
+    "homeValue": 307295,
+    "rent": 1370,
+    "appreciation5yr": 0.0636
+  },
+  {
+    "id": "vallejo-ca",
+    "metro": "Vallejo, CA",
+    "state": "CA",
+    "homeValue": 577931,
+    "rent": 2385,
+    "appreciation5yr": 0.0175
+  },
+  {
+    "id": "santa-maria-ca",
+    "metro": "Santa Maria, CA",
+    "state": "CA",
+    "homeValue": 998746,
+    "rent": 3369,
+    "appreciation5yr": 0.069
+  },
+  {
+    "id": "salinas-ca",
+    "metro": "Salinas, CA",
+    "state": "CA",
+    "homeValue": 853445,
+    "rent": 2853,
+    "appreciation5yr": 0.0375
+  },
+  {
+    "id": "salem-or",
+    "metro": "Salem, OR",
+    "state": "OR",
+    "homeValue": 452993,
+    "rent": 1625,
+    "appreciation5yr": 0.035
+  },
+  {
+    "id": "mobile-al",
+    "metro": "Mobile, AL",
+    "state": "AL",
+    "homeValue": 195585,
+    "rent": 1304,
+    "appreciation5yr": 0.0471
+  },
+  {
+    "id": "reading-pa",
+    "metro": "Reading, PA",
+    "state": "PA",
+    "homeValue": 310046,
+    "rent": 1512,
+    "appreciation5yr": 0.0667
+  },
+  {
+    "id": "corpus-christi-tx",
+    "metro": "Corpus Christi, TX",
+    "state": "TX",
+    "homeValue": 225583,
+    "rent": 1407,
+    "appreciation5yr": 0.018
+  },
+  {
+    "id": "brownsville-tx",
+    "metro": "Brownsville, TX",
+    "state": "TX",
+    "homeValue": 206459,
+    "rent": 1463,
+    "appreciation5yr": 0.0657
+  },
+  {
+    "id": "manchester-nh",
+    "metro": "Manchester, NH",
+    "state": "NH",
+    "homeValue": 521781,
+    "rent": 2119,
+    "appreciation5yr": 0.0705
+  },
+  {
+    "id": "fort-wayne-in",
+    "metro": "Fort Wayne, IN",
+    "state": "IN",
+    "homeValue": 257076,
+    "rent": 1230,
+    "appreciation5yr": 0.0702
+  },
+  {
+    "id": "gulfport-ms",
+    "metro": "Gulfport, MS",
+    "state": "MS",
+    "homeValue": 221391,
+    "rent": 1426,
+    "appreciation5yr": 0.0454
+  },
+  {
+    "id": "salisbury-md",
+    "metro": "Salisbury, MD",
+    "state": "DE",
+    "homeValue": 426316,
+    "rent": 1931,
+    "appreciation5yr": 0.0471
+  },
+  {
+    "id": "flint-mi",
+    "metro": "Flint, MI",
+    "state": "MI",
+    "homeValue": 193468,
+    "rent": 1104,
+    "appreciation5yr": 0.056
+  },
+  {
+    "id": "peoria-il",
+    "metro": "Peoria, IL",
+    "state": "IL",
+    "homeValue": 168955,
+    "rent": 1141,
+    "appreciation5yr": 0.0697
+  },
+  {
+    "id": "canton-oh",
+    "metro": "Canton, OH",
+    "state": "OH",
+    "homeValue": 214195,
+    "rent": 1040,
+    "appreciation5yr": 0.0661
+  },
+  {
+    "id": "savannah-ga",
+    "metro": "Savannah, GA",
+    "state": "GA",
+    "homeValue": 347751,
+    "rent": 1774,
+    "appreciation5yr": 0.0727
+  },
+  {
+    "id": "anchorage-ak",
+    "metro": "Anchorage, AK",
+    "state": "AK",
+    "homeValue": 417279,
+    "rent": 1734,
+    "appreciation5yr": 0.0441
+  },
+  {
+    "id": "beaumont-tx",
+    "metro": "Beaumont, TX",
+    "state": "TX",
+    "homeValue": 183325,
+    "rent": 1308,
+    "appreciation5yr": 0.009
+  },
+  {
+    "id": "shreveport-la",
+    "metro": "Shreveport, LA",
+    "state": "LA",
+    "homeValue": 184116,
+    "rent": 1337,
+    "appreciation5yr": 0.0076
+  },
+  {
+    "id": "trenton-nj",
+    "metro": "Trenton, NJ",
+    "state": "NJ",
+    "homeValue": 442247,
+    "rent": 2581,
+    "appreciation5yr": 0.0724
+  },
+  {
+    "id": "montgomery-al",
+    "metro": "Montgomery, AL",
+    "state": "AL",
+    "homeValue": 211758,
+    "rent": 1388,
+    "appreciation5yr": 0.0534
+  },
+  {
+    "id": "davenport-ia",
+    "metro": "Davenport, IA",
+    "state": "IL",
+    "homeValue": 193242,
+    "rent": 1026,
+    "appreciation5yr": 0.0396
+  },
+  {
+    "id": "tallahassee-fl",
+    "metro": "Tallahassee, FL",
+    "state": "FL",
+    "homeValue": 282643,
+    "rent": 1538,
+    "appreciation5yr": 0.0476
+  },
+  {
+    "id": "eugene-or",
+    "metro": "Eugene, OR",
+    "state": "OR",
+    "homeValue": 457957,
+    "rent": 1786,
+    "appreciation5yr": 0.0354
+  },
+  {
+    "id": "naples-fl",
+    "metro": "Naples, FL",
+    "state": "FL",
+    "homeValue": 556124,
+    "rent": 2723,
+    "appreciation5yr": 0.0679
+  },
+  {
+    "id": "ann-arbor-mi",
+    "metro": "Ann Arbor, MI",
+    "state": "MI",
+    "homeValue": 418400,
+    "rent": 2039,
+    "appreciation5yr": 0.0416
+  },
+  {
+    "id": "ocala-fl",
+    "metro": "Ocala, FL",
+    "state": "FL",
+    "homeValue": 273395,
+    "rent": 1628,
+    "appreciation5yr": 0.0629
+  },
+  {
+    "id": "hickory-nc",
+    "metro": "Hickory, NC",
+    "state": "NC",
+    "homeValue": 268648,
+    "rent": 1416,
+    "appreciation5yr": 0.0638
+  },
+  {
+    "id": "huntington-wv",
+    "metro": "Huntington, WV",
+    "state": "OH",
+    "homeValue": 161613,
+    "rent": 1042,
+    "appreciation5yr": 0.0363
+  },
+  {
+    "id": "fort-collins-co",
+    "metro": "Fort Collins, CO",
+    "state": "CO",
+    "homeValue": 556811,
+    "rent": 2002,
+    "appreciation5yr": 0.0331
+  },
+  {
+    "id": "rockford-il",
+    "metro": "Rockford, IL",
+    "state": "IL",
+    "homeValue": 216619,
+    "rent": 1278,
+    "appreciation5yr": 0.0938
+  },
+  {
+    "id": "lincoln-ne",
+    "metro": "Lincoln, NE",
+    "state": "NE",
+    "homeValue": 301936,
+    "rent": 1334,
+    "appreciation5yr": 0.0546
+  },
+  {
+    "id": "gainesville-fl",
+    "metro": "Gainesville, FL",
+    "state": "FL",
+    "homeValue": 305251,
+    "rent": 1658,
+    "appreciation5yr": 0.0482
+  },
+  {
+    "id": "boulder-co",
+    "metro": "Boulder, CO",
+    "state": "CO",
+    "homeValue": 728816,
+    "rent": 2253,
+    "appreciation5yr": 0.0265
+  },
+  {
+    "id": "green-bay-wi",
+    "metro": "Green Bay, WI",
+    "state": "WI",
+    "homeValue": 342349,
+    "rent": 1183,
+    "appreciation5yr": 0.0818
+  },
+  {
+    "id": "columbus-ga",
+    "metro": "Columbus, GA",
+    "state": "GA",
+    "homeValue": 208445,
+    "rent": 1249,
+    "appreciation5yr": 0.0574
+  },
+  {
+    "id": "south-bend-in",
+    "metro": "South Bend, IN",
+    "state": "IN",
+    "homeValue": 234870,
+    "rent": 1385,
+    "appreciation5yr": 0.0707
+  },
+  {
+    "id": "spartanburg-sc",
+    "metro": "Spartanburg, SC",
+    "state": "SC",
+    "homeValue": 277911,
+    "rent": 1458,
+    "appreciation5yr": 0.0667
+  },
+  {
+    "id": "greeley-co",
+    "metro": "Greeley, CO",
+    "state": "CO",
+    "homeValue": 497596,
+    "rent": 1690,
+    "appreciation5yr": 0.0269
+  },
+  {
+    "id": "lubbock-tx",
+    "metro": "Lubbock, TX",
+    "state": "TX",
+    "homeValue": 211490,
+    "rent": 1402,
+    "appreciation5yr": 0.0364
+  },
+  {
+    "id": "clarksville-tn",
+    "metro": "Clarksville, TN",
+    "state": "TN",
+    "homeValue": 293331,
+    "rent": 1342,
+    "appreciation5yr": 0.0619
+  },
+  {
+    "id": "roanoke-va",
+    "metro": "Roanoke, VA",
+    "state": "VA",
+    "homeValue": 297806,
+    "rent": 1385,
+    "appreciation5yr": 0.0653
+  },
+  {
+    "id": "evansville-in",
+    "metro": "Evansville, IN",
+    "state": "IN",
+    "homeValue": 223149,
+    "rent": 1076,
+    "appreciation5yr": 0.0625
+  },
+  {
+    "id": "kingsport-tn",
+    "metro": "Kingsport, TN",
+    "state": "TN",
+    "homeValue": 243171,
+    "rent": 1327,
+    "appreciation5yr": 0.0762
+  },
+  {
+    "id": "kennewick-wa",
+    "metro": "Kennewick, WA",
+    "state": "WA",
+    "homeValue": 441609,
+    "rent": 1694,
+    "appreciation5yr": 0.0437
+  },
+  {
+    "id": "utica-ny",
+    "metro": "Utica, NY",
+    "state": "NY",
+    "homeValue": 223525,
+    "rent": 1375,
+    "appreciation5yr": 0.0733
+  },
+  {
+    "id": "hagerstown-md",
+    "metro": "Hagerstown, MD",
+    "state": "MD",
+    "homeValue": 323045,
+    "rent": 1607,
+    "appreciation5yr": 0.058
+  },
+  {
+    "id": "duluth-mn",
+    "metro": "Duluth, MN",
+    "state": "MN",
+    "homeValue": 259065,
+    "rent": 1461,
+    "appreciation5yr": 0.0631
+  },
+  {
+    "id": "olympia-wa",
+    "metro": "Olympia, WA",
+    "state": "WA",
+    "homeValue": 532620,
+    "rent": 2009,
+    "appreciation5yr": 0.0371
+  },
+  {
+    "id": "longview-tx",
+    "metro": "Longview, TX",
+    "state": "TX",
+    "homeValue": 218847,
+    "rent": 1217,
+    "appreciation5yr": 0.0507
+  },
+  {
+    "id": "wilmington-nc",
+    "metro": "Wilmington, NC",
+    "state": "NC",
+    "homeValue": 445018,
+    "rent": 1679,
+    "appreciation5yr": 0.0673
+  },
+  {
+    "id": "san-luis-obispo-ca",
+    "metro": "San Luis Obispo, CA",
+    "state": "CA",
+    "homeValue": 906799,
+    "rent": 2930,
+    "appreciation5yr": 0.0517
+  },
+  {
+    "id": "crestview-fl",
+    "metro": "Crestview, FL",
+    "state": "FL",
+    "homeValue": 439497,
+    "rent": 1960,
+    "appreciation5yr": 0.0422
+  },
+  {
+    "id": "merced-ca",
+    "metro": "Merced, CA",
+    "state": "CA",
+    "homeValue": 418388,
+    "rent": 1924,
+    "appreciation5yr": 0.0393
+  },
+  {
+    "id": "waco-tx",
+    "metro": "Waco, TX",
+    "state": "TX",
+    "homeValue": 254180,
+    "rent": 1401,
+    "appreciation5yr": 0.0496
+  },
+  {
+    "id": "cedar-rapids-ia",
+    "metro": "Cedar Rapids, IA",
+    "state": "IA",
+    "homeValue": 241161,
+    "rent": 1209,
+    "appreciation5yr": 0.0529
+  },
+  {
+    "id": "atlantic-city-nj",
+    "metro": "Atlantic City, NJ",
+    "state": "NJ",
+    "homeValue": 377406,
+    "rent": 2142,
+    "appreciation5yr": 0.0893
+  },
+  {
+    "id": "bremerton-wa",
+    "metro": "Bremerton, WA",
+    "state": "WA",
+    "homeValue": 584472,
+    "rent": 2029,
+    "appreciation5yr": 0.0294
+  },
+  {
+    "id": "sioux-falls-sd",
+    "metro": "Sioux Falls, SD",
+    "state": "SD",
+    "homeValue": 339807,
+    "rent": 1320,
+    "appreciation5yr": 0.0566
+  },
+  {
+    "id": "santa-cruz-ca",
+    "metro": "Santa Cruz, CA",
+    "state": "CA",
+    "homeValue": 1158423,
+    "rent": 3504,
+    "appreciation5yr": 0.0349
+  },
+  {
+    "id": "erie-pa",
+    "metro": "Erie, PA",
+    "state": "PA",
+    "homeValue": 219355,
+    "rent": 1107,
+    "appreciation5yr": 0.0725
+  },
+  {
+    "id": "norwich-ct",
+    "metro": "Norwich, CT",
+    "state": "CT",
+    "homeValue": 418336,
+    "rent": 1938,
+    "appreciation5yr": 0.0793
+  },
+  {
+    "id": "amarillo-tx",
+    "metro": "Amarillo, TX",
+    "state": "TX",
+    "homeValue": 218261,
+    "rent": 1297,
+    "appreciation5yr": 0.0548
+  },
+  {
+    "id": "laredo-tx",
+    "metro": "Laredo, TX",
+    "state": "TX",
+    "homeValue": 217699,
+    "rent": 1361,
+    "appreciation5yr": 0.0277
+  },
+  {
+    "id": "tuscaloosa-al",
+    "metro": "Tuscaloosa, AL",
+    "state": "AL",
+    "homeValue": 221334,
+    "rent": 1483,
+    "appreciation5yr": 0.0365
+  },
+  {
+    "id": "college-station-tx",
+    "metro": "College Station, TX",
+    "state": "TX",
+    "homeValue": 309017,
+    "rent": 1515,
+    "appreciation5yr": 0.0453
+  },
+  {
+    "id": "kalamazoo-mi",
+    "metro": "Kalamazoo, MI",
+    "state": "MI",
+    "homeValue": 274786,
+    "rent": 1294,
+    "appreciation5yr": 0.0538
+  },
+  {
+    "id": "lynchburg-va",
+    "metro": "Lynchburg, VA",
+    "state": "VA",
+    "homeValue": 288024,
+    "rent": 1324,
+    "appreciation5yr": 0.0615
+  },
+  {
+    "id": "charleston-wv",
+    "metro": "Charleston, WV",
+    "state": "WV",
+    "homeValue": 147562,
+    "rent": 1184,
+    "appreciation5yr": 0.0479
+  },
+  {
+    "id": "yakima-wa",
+    "metro": "Yakima, WA",
+    "state": "WA",
+    "homeValue": 353708,
+    "rent": 1244,
+    "appreciation5yr": 0.038
+  },
+  {
+    "id": "fargo-nd",
+    "metro": "Fargo, ND",
+    "state": "ND",
+    "homeValue": 323776,
+    "rent": 1142,
+    "appreciation5yr": 0.0436
+  },
+  {
+    "id": "binghamton-ny",
+    "metro": "Binghamton, NY",
+    "state": "NY",
+    "homeValue": 193399,
+    "rent": 1291,
+    "appreciation5yr": 0.0734
+  },
+  {
+    "id": "fort-smith-ar",
+    "metro": "Fort Smith, AR",
+    "state": "AR",
+    "homeValue": 203534,
+    "rent": 1021,
+    "appreciation5yr": 0.0589
+  },
+  {
+    "id": "appleton-wi",
+    "metro": "Appleton, WI",
+    "state": "WI",
+    "homeValue": 346439,
+    "rent": 1227,
+    "appreciation5yr": 0.0822
+  },
+  {
+    "id": "topeka-ks",
+    "metro": "Topeka, KS",
+    "state": "KS",
+    "homeValue": 215081,
+    "rent": 1211,
+    "appreciation5yr": 0.0685
+  },
+  {
+    "id": "macon-ga",
+    "metro": "Macon, GA",
+    "state": "GA",
+    "homeValue": 196802,
+    "rent": 1214,
+    "appreciation5yr": 0.0619
+  },
+  {
+    "id": "tyler-tx",
+    "metro": "Tyler, TX",
+    "state": "TX",
+    "homeValue": 271595,
+    "rent": 1365,
+    "appreciation5yr": 0.0571
+  },
+  {
+    "id": "barnstable-town-ma",
+    "metro": "Barnstable Town, MA",
+    "state": "MA",
+    "homeValue": 758836,
+    "rent": 2787,
+    "appreciation5yr": 0.0705
+  },
+  {
+    "id": "daphne-al",
+    "metro": "Daphne, AL",
+    "state": "AL",
+    "homeValue": 371155,
+    "rent": 1678,
+    "appreciation5yr": 0.0494
+  },
+  {
+    "id": "bellingham-wa",
+    "metro": "Bellingham, WA",
+    "state": "WA",
+    "homeValue": 616914,
+    "rent": 2052,
+    "appreciation5yr": 0.0429
+  },
+  {
+    "id": "burlington-vt",
+    "metro": "Burlington, VT",
+    "state": "VT",
+    "homeValue": 470844,
+    "rent": 2071,
+    "appreciation5yr": 0.0517
+  },
+  {
+    "id": "rochester-mn",
+    "metro": "Rochester, MN",
+    "state": "MN",
+    "homeValue": 340318,
+    "rent": 1688,
+    "appreciation5yr": 0.047
+  },
+  {
+    "id": "lafayette-in",
+    "metro": "Lafayette, IN",
+    "state": "IN",
+    "homeValue": 282667,
+    "rent": 1323,
+    "appreciation5yr": 0.0684
+  },
+  {
+    "id": "champaign-il",
+    "metro": "Champaign, IL",
+    "state": "IL",
+    "homeValue": 234211,
+    "rent": 1388,
+    "appreciation5yr": 0.0626
+  },
+  {
+    "id": "medford-or",
+    "metro": "Medford, OR",
+    "state": "OR",
+    "homeValue": 438235,
+    "rent": 1816,
+    "appreciation5yr": 0.0243
+  },
+  {
+    "id": "charlottesville-va",
+    "metro": "Charlottesville, VA",
+    "state": "VA",
+    "homeValue": 469735,
+    "rent": 2039,
+    "appreciation5yr": 0.05
+  },
+  {
+    "id": "lake-charles-la",
+    "metro": "Lake Charles, LA",
+    "state": "LA",
+    "homeValue": 198710,
+    "rent": 1163,
+    "appreciation5yr": -0.0168
+  },
+  {
+    "id": "las-cruces-nm",
+    "metro": "Las Cruces, NM",
+    "state": "NM",
+    "homeValue": 288476,
+    "rent": 1442,
+    "appreciation5yr": 0.0643
+  },
+  {
+    "id": "chico-ca",
+    "metro": "Chico, CA",
+    "state": "CA",
+    "homeValue": 402962,
+    "rent": 1622,
+    "appreciation5yr": 0.0093
+  },
+  {
+    "id": "hilton-head-island-sc",
+    "metro": "Hilton Head Island, SC",
+    "state": "SC",
+    "homeValue": 517425,
+    "rent": 2066,
+    "appreciation5yr": 0.0793
+  },
+  {
+    "id": "athens-ga",
+    "metro": "Athens, GA",
+    "state": "GA",
+    "homeValue": 369726,
+    "rent": 1733,
+    "appreciation5yr": 0.0684
+  },
+  {
+    "id": "lake-havasu-city-az",
+    "metro": "Lake Havasu City, AZ",
+    "state": "AZ",
+    "homeValue": 351906,
+    "rent": 1504,
+    "appreciation5yr": 0.0395
+  },
+  {
+    "id": "columbia-mo",
+    "metro": "Columbia, MO",
+    "state": "MO",
+    "homeValue": 319071,
+    "rent": 1442,
+    "appreciation5yr": 0.065
+  },
+  {
+    "id": "springfield-il",
+    "metro": "Springfield, IL",
+    "state": "IL",
+    "homeValue": 194863,
+    "rent": 1177,
+    "appreciation5yr": 0.0578
+  },
+  {
+    "id": "houma-la",
+    "metro": "Houma, LA",
+    "state": "LA",
+    "homeValue": 183792,
+    "rent": 1332,
+    "appreciation5yr": -0.0286
+  },
+  {
+    "id": "monroe-la",
+    "metro": "Monroe, LA",
+    "state": "LA",
+    "homeValue": 164810,
+    "rent": 1209,
+    "appreciation5yr": 0.0222
+  },
+  {
+    "id": "elkhart-in",
+    "metro": "Elkhart, IN",
+    "state": "IN",
+    "homeValue": 262315,
+    "rent": 1169,
+    "appreciation5yr": 0.0639
+  },
+  {
+    "id": "johnson-city-tn",
+    "metro": "Johnson City, TN",
+    "state": "TN",
+    "homeValue": 280137,
+    "rent": 1489,
+    "appreciation5yr": 0.0736
+  },
+  {
+    "id": "yuma-az",
+    "metro": "Yuma, AZ",
+    "state": "AZ",
+    "homeValue": 280768,
+    "rent": 1420,
+    "appreciation5yr": 0.0682
+  },
+  {
+    "id": "gainesville-ga",
+    "metro": "Gainesville, GA",
+    "state": "GA",
+    "homeValue": 390801,
+    "rent": 1734,
+    "appreciation5yr": 0.0624
+  },
+  {
+    "id": "jacksonville-nc",
+    "metro": "Jacksonville, NC",
+    "state": "NC",
+    "homeValue": 291334,
+    "rent": 1511,
+    "appreciation5yr": 0.0792
+  },
+  {
+    "id": "florence-sc",
+    "metro": "Florence, SC",
+    "state": "SC",
+    "homeValue": 190331,
+    "rent": 1358,
+    "appreciation5yr": 0.0537
+  },
+  {
+    "id": "hilo-hi",
+    "metro": "Hilo, HI",
+    "state": "HI",
+    "homeValue": 569379,
+    "rent": 2699,
+    "appreciation5yr": 0.052
+  },
+  {
+    "id": "st-cloud-mn",
+    "metro": "St. Cloud, MN",
+    "state": "MN",
+    "homeValue": 314933,
+    "rent": 1246,
+    "appreciation5yr": 0.0603
+  },
+  {
+    "id": "racine-wi",
+    "metro": "Racine, WI",
+    "state": "WI",
+    "homeValue": 308974,
+    "rent": 1460,
+    "appreciation5yr": 0.0645
+  },
+  {
+    "id": "bend-or",
+    "metro": "Bend, OR",
+    "state": "OR",
+    "homeValue": 669594,
+    "rent": 2165,
+    "appreciation5yr": 0.0345
+  },
+  {
+    "id": "saginaw-mi",
+    "metro": "Saginaw, MI",
+    "state": "MI",
+    "homeValue": 171071,
+    "rent": 1035,
+    "appreciation5yr": 0.074
+  },
+  {
+    "id": "warner-robins-ga",
+    "metro": "Warner Robins, GA",
+    "state": "GA",
+    "homeValue": 252125,
+    "rent": 1553,
+    "appreciation5yr": 0.0745
+  },
+  {
+    "id": "terre-haute-in",
+    "metro": "Terre Haute, IN",
+    "state": "IN",
+    "homeValue": 165189,
+    "rent": 951,
+    "appreciation5yr": 0.0614
+  },
+  {
+    "id": "torrington-ct",
+    "metro": "Torrington, CT",
+    "state": "CT",
+    "homeValue": 418888,
+    "rent": 1792,
+    "appreciation5yr": 0.0738
+  },
+  {
+    "id": "punta-gorda-fl",
+    "metro": "Punta Gorda, FL",
+    "state": "FL",
+    "homeValue": 298079,
+    "rent": 1920,
+    "appreciation5yr": 0.0254
+  },
+  {
+    "id": "billings-mt",
+    "metro": "Billings, MT",
+    "state": "MT",
+    "homeValue": 406958,
+    "rent": 1435,
+    "appreciation5yr": 0.0631
+  },
+  {
+    "id": "redding-ca",
+    "metro": "Redding, CA",
+    "state": "CA",
+    "homeValue": 374556,
+    "rent": 1610,
+    "appreciation5yr": 0.0241
+  },
+  {
+    "id": "kingston-ny",
+    "metro": "Kingston, NY",
+    "state": "NY",
+    "homeValue": 436099,
+    "rent": 2178,
+    "appreciation5yr": 0.0714
+  },
+  {
+    "id": "panama-city-fl",
+    "metro": "Panama City, FL",
+    "state": "FL",
+    "homeValue": 343463,
+    "rent": 1677,
+    "appreciation5yr": 0.0483
+  },
+  {
+    "id": "joplin-mo",
+    "metro": "Joplin, MO",
+    "state": "MO",
+    "homeValue": 223297,
+    "rent": 1272,
+    "appreciation5yr": 0.0655
+  },
+  {
+    "id": "dover-de",
+    "metro": "Dover, DE",
+    "state": "DE",
+    "homeValue": 369962,
+    "rent": 1728,
+    "appreciation5yr": 0.0611
+  },
+  {
+    "id": "el-centro-ca",
+    "metro": "El Centro, CA",
+    "state": "CA",
+    "homeValue": 380141,
+    "rent": 2007,
+    "appreciation5yr": 0.069
+  },
+  {
+    "id": "jackson-tn",
+    "metro": "Jackson, TN",
+    "state": "TN",
+    "homeValue": 205732,
+    "rent": 1410,
+    "appreciation5yr": 0.0612
+  },
+  {
+    "id": "yuba-city-ca",
+    "metro": "Yuba City, CA",
+    "state": "CA",
+    "homeValue": 431104,
+    "rent": 1953,
+    "appreciation5yr": 0.0282
+  },
+  {
+    "id": "bowling-green-ky",
+    "metro": "Bowling Green, KY",
+    "state": "KY",
+    "homeValue": 265437,
+    "rent": 1295,
+    "appreciation5yr": 0.0574
+  },
+  {
+    "id": "st-george-ut",
+    "metro": "St. George, UT",
+    "state": "UT",
+    "homeValue": 531781,
+    "rent": 1904,
+    "appreciation5yr": 0.046
+  },
+  {
+    "id": "muskegon-mi",
+    "metro": "Muskegon, MI",
+    "state": "MI",
+    "homeValue": 251369,
+    "rent": 1143,
+    "appreciation5yr": 0.0608
+  },
+  {
+    "id": "abilene-tx",
+    "metro": "Abilene, TX",
+    "state": "TX",
+    "homeValue": 213394,
+    "rent": 1738,
+    "appreciation5yr": 0.0492
+  },
+  {
+    "id": "iowa-city-ia",
+    "metro": "Iowa City, IA",
+    "state": "IA",
+    "homeValue": 299241,
+    "rent": 1376,
+    "appreciation5yr": 0.051
+  },
+  {
+    "id": "auburn-al",
+    "metro": "Auburn, AL",
+    "state": "AL",
+    "homeValue": 348237,
+    "rent": 1734,
+    "appreciation5yr": 0.0606
+  },
+  {
+    "id": "midland-tx",
+    "metro": "Midland, TX",
+    "state": "TX",
+    "homeValue": 329612,
+    "rent": 1588,
+    "appreciation5yr": 0.0282
+  },
+  {
+    "id": "bloomington-il",
+    "metro": "Bloomington, IL",
+    "state": "IL",
+    "homeValue": 255821,
+    "rent": 1420,
+    "appreciation5yr": 0.0669
+  },
+  {
+    "id": "hattiesburg-ms",
+    "metro": "Hattiesburg, MS",
+    "state": "MS",
+    "homeValue": 217049,
+    "rent": 1394,
+    "appreciation5yr": 0.0446
+  },
+  {
+    "id": "oshkosh-wi",
+    "metro": "Oshkosh, WI",
+    "state": "WI",
+    "homeValue": 299989,
+    "rent": 1130,
+    "appreciation5yr": 0.0697
+  },
+  {
+    "id": "eau-claire-wi",
+    "metro": "Eau Claire, WI",
+    "state": "WI",
+    "homeValue": 319498,
+    "rent": 1223,
+    "appreciation5yr": 0.0601
+  },
+  {
+    "id": "greenville-nc",
+    "metro": "Greenville, NC",
+    "state": "NC",
+    "homeValue": 243619,
+    "rent": 1347,
+    "appreciation5yr": 0.0739
+  },
+  {
+    "id": "burlington-nc",
+    "metro": "Burlington, NC",
+    "state": "NC",
+    "homeValue": 295859,
+    "rent": 1410,
+    "appreciation5yr": 0.0765
+  },
+  {
+    "id": "waterloo-ia",
+    "metro": "Waterloo, IA",
+    "state": "IA",
+    "homeValue": 197214,
+    "rent": 1110,
+    "appreciation5yr": 0.0562
+  },
+  {
+    "id": "coeur-d-alene-id",
+    "metro": "Coeur d'Alene, ID",
+    "state": "ID",
+    "homeValue": 602453,
+    "rent": 1762,
+    "appreciation5yr": 0.0459
+  },
+  {
+    "id": "east-stroudsburg-pa",
+    "metro": "East Stroudsburg, PA",
+    "state": "PA",
+    "homeValue": 310245,
+    "rent": 1897,
+    "appreciation5yr": 0.0628
+  },
+  {
+    "id": "pueblo-co",
+    "metro": "Pueblo, CO",
+    "state": "CO",
+    "homeValue": 287218,
+    "rent": 1313,
+    "appreciation5yr": 0.0295
+  },
+  {
+    "id": "blacksburg-va",
+    "metro": "Blacksburg, VA",
+    "state": "VA",
+    "homeValue": 288731,
+    "rent": 1728,
+    "appreciation5yr": 0.0495
+  },
+  {
+    "id": "wausau-wi",
+    "metro": "Wausau, WI",
+    "state": "WI",
+    "homeValue": 266858,
+    "rent": 1007,
+    "appreciation5yr": 0.0797
+  },
+  {
+    "id": "kahului-hi",
+    "metro": "Kahului, HI",
+    "state": "HI",
+    "homeValue": 992049,
+    "rent": 3607,
+    "appreciation5yr": 0.0505
+  },
+  {
+    "id": "janesville-wi",
+    "metro": "Janesville, WI",
+    "state": "WI",
+    "homeValue": 291514,
+    "rent": 1215,
+    "appreciation5yr": 0.0787
+  },
+  {
+    "id": "tupelo-ms",
+    "metro": "Tupelo, MS",
+    "state": "MS",
+    "homeValue": 189090,
+    "rent": 1239,
+    "appreciation5yr": 0.0524
+  },
+  {
+    "id": "bloomington-in",
+    "metro": "Bloomington, IN",
+    "state": "IN",
+    "homeValue": 300006,
+    "rent": 1449,
+    "appreciation5yr": 0.0502
+  },
+  {
+    "id": "odessa-tx",
+    "metro": "Odessa, TX",
+    "state": "TX",
+    "homeValue": 255553,
+    "rent": 1612,
+    "appreciation5yr": 0.0256
+  },
+  {
+    "id": "jackson-mi",
+    "metro": "Jackson, MI",
+    "state": "MI",
+    "homeValue": 222927,
+    "rent": 1193,
+    "appreciation5yr": 0.0447
+  },
+  {
+    "id": "state-college-pa",
+    "metro": "State College, PA",
+    "state": "PA",
+    "homeValue": 349701,
+    "rent": 1706,
+    "appreciation5yr": 0.0415
+  },
+  {
+    "id": "sebastian-fl",
+    "metro": "Sebastian, FL",
+    "state": "FL",
+    "homeValue": 363743,
+    "rent": 2176,
+    "appreciation5yr": 0.0553
+  },
+  {
+    "id": "madera-ca",
+    "metro": "Madera, CA",
+    "state": "CA",
+    "homeValue": 425237,
+    "rent": 2303,
+    "appreciation5yr": 0.0519
+  },
+  {
+    "id": "decatur-al",
+    "metro": "Decatur, AL",
+    "state": "AL",
+    "homeValue": 231327,
+    "rent": 1152,
+    "appreciation5yr": 0.0441
+  },
+  {
+    "id": "chambersburg-pa",
+    "metro": "Chambersburg, PA",
+    "state": "PA",
+    "homeValue": 289363,
+    "rent": 1252,
+    "appreciation5yr": 0.0512
+  },
+  {
+    "id": "vineland-nj",
+    "metro": "Vineland, NJ",
+    "state": "NJ",
+    "homeValue": 275565,
+    "rent": 1595,
+    "appreciation5yr": 0.0755
+  },
+  {
+    "id": "idaho-falls-id",
+    "metro": "Idaho Falls, ID",
+    "state": "ID",
+    "homeValue": 411639,
+    "rent": 1408,
+    "appreciation5yr": 0.0399
+  },
+  {
+    "id": "grand-junction-co",
+    "metro": "Grand Junction, CO",
+    "state": "CO",
+    "homeValue": 433021,
+    "rent": 1763,
+    "appreciation5yr": 0.061
+  },
+  {
+    "id": "elizabethtown-ky",
+    "metro": "Elizabethtown, KY",
+    "state": "KY",
+    "homeValue": 249463,
+    "rent": 1270,
+    "appreciation5yr": 0.0583
+  },
+  {
+    "id": "niles-mi",
+    "metro": "Niles, MI",
+    "state": "MI",
+    "homeValue": 276283,
+    "rent": 1352,
+    "appreciation5yr": 0.0596
+  },
+  {
+    "id": "monroe-mi",
+    "metro": "Monroe, MI",
+    "state": "MI",
+    "homeValue": 266750,
+    "rent": 1335,
+    "appreciation5yr": 0.052
+  },
+  {
+    "id": "santa-fe-nm",
+    "metro": "Santa Fe, NM",
+    "state": "NM",
+    "homeValue": 552413,
+    "rent": 1985,
+    "appreciation5yr": 0.0384
+  },
+  {
+    "id": "concord-nh",
+    "metro": "Concord, NH",
+    "state": "NH",
+    "homeValue": 487161,
+    "rent": 1965,
+    "appreciation5yr": 0.078
+  },
+  {
+    "id": "alexandria-la",
+    "metro": "Alexandria, LA",
+    "state": "LA",
+    "homeValue": 165729,
+    "rent": 1105,
+    "appreciation5yr": 0.0038
+  },
+  {
+    "id": "traverse-city-mi",
+    "metro": "Traverse City, MI",
+    "state": "MI",
+    "homeValue": 415222,
+    "rent": 1930,
+    "appreciation5yr": 0.0675
+  },
+  {
+    "id": "bangor-me",
+    "metro": "Bangor, ME",
+    "state": "ME",
+    "homeValue": 276917,
+    "rent": 1534,
+    "appreciation5yr": 0.0724
+  },
+  {
+    "id": "homosassa-springs-fl",
+    "metro": "Homosassa Springs, FL",
+    "state": "FL",
+    "homeValue": 271771,
+    "rent": 1712,
+    "appreciation5yr": 0.0572
+  },
+  {
+    "id": "hanford-ca",
+    "metro": "Hanford, CA",
+    "state": "CA",
+    "homeValue": 364497,
+    "rent": 1972,
+    "appreciation5yr": 0.0553
+  },
+  {
+    "id": "jefferson-city-mo",
+    "metro": "Jefferson City, MO",
+    "state": "MO",
+    "homeValue": 271612,
+    "rent": 1001,
+    "appreciation5yr": 0.0634
+  },
+  {
+    "id": "florence-al",
+    "metro": "Florence, AL",
+    "state": "AL",
+    "homeValue": 213869,
+    "rent": 1205,
+    "appreciation5yr": 0.0559
+  },
+  {
+    "id": "dothan-al",
+    "metro": "Dothan, AL",
+    "state": "AL",
+    "homeValue": 194043,
+    "rent": 1215,
+    "appreciation5yr": 0.0559
+  },
+  {
+    "id": "london-ky",
+    "metro": "London, KY",
+    "state": "KY",
+    "homeValue": 151500,
+    "rent": 1027,
+    "appreciation5yr": 0.0375
+  },
+  {
+    "id": "albany-ga",
+    "metro": "Albany, GA",
+    "state": "GA",
+    "homeValue": 166032,
+    "rent": 1006,
+    "appreciation5yr": 0.0631
+  },
+  {
+    "id": "sioux-city-ia",
+    "metro": "Sioux City, IA",
+    "state": "IA",
+    "homeValue": 223225,
+    "rent": 1146,
+    "appreciation5yr": 0.0542
+  },
+  {
+    "id": "wichita-falls-tx",
+    "metro": "Wichita Falls, TX",
+    "state": "TX",
+    "homeValue": 176386,
+    "rent": 1269,
+    "appreciation5yr": 0.0521
+  },
+  {
+    "id": "texarkana-tx",
+    "metro": "Texarkana, TX",
+    "state": "TX",
+    "homeValue": 180624,
+    "rent": 1102,
+    "appreciation5yr": 0.0198
+  },
+  {
+    "id": "valdosta-ga",
+    "metro": "Valdosta, GA",
+    "state": "GA",
+    "homeValue": 223843,
+    "rent": 1362,
+    "appreciation5yr": 0.0726
+  },
+  {
+    "id": "logan-ut",
+    "metro": "Logan, UT",
+    "state": "UT",
+    "homeValue": 469787,
+    "rent": 1458,
+    "appreciation5yr": 0.053
+  },
+  {
+    "id": "flagstaff-az",
+    "metro": "Flagstaff, AZ",
+    "state": "AZ",
+    "homeValue": 626798,
+    "rent": 2083,
+    "appreciation5yr": 0.0653
+  },
+  {
+    "id": "rocky-mount-nc",
+    "metro": "Rocky Mount, NC",
+    "state": "NC",
+    "homeValue": 200438,
+    "rent": 1177,
+    "appreciation5yr": 0.0589
+  },
+  {
+    "id": "pottsville-pa",
+    "metro": "Pottsville, PA",
+    "state": "PA",
+    "homeValue": 162422,
+    "rent": 1245,
+    "appreciation5yr": 0.0701
+  },
+  {
+    "id": "dalton-ga",
+    "metro": "Dalton, GA",
+    "state": "GA",
+    "homeValue": 248532,
+    "rent": 1400,
+    "appreciation5yr": 0.0702
+  },
+  {
+    "id": "lebanon-pa",
+    "metro": "Lebanon, PA",
+    "state": "PA",
+    "homeValue": 316411,
+    "rent": 1382,
+    "appreciation5yr": 0.0688
+  },
+  {
+    "id": "morristown-tn",
+    "metro": "Morristown, TN",
+    "state": "TN",
+    "homeValue": 297458,
+    "rent": 1467,
+    "appreciation5yr": 0.0831
+  },
+  {
+    "id": "winchester-va",
+    "metro": "Winchester, VA",
+    "state": "VA",
+    "homeValue": 387811,
+    "rent": 1914,
+    "appreciation5yr": 0.0518
+  },
+  {
+    "id": "wheeling-wv",
+    "metro": "Wheeling, WV",
+    "state": "OH",
+    "homeValue": 138059,
+    "rent": 942,
+    "appreciation5yr": 0.0208
+  },
+  {
+    "id": "morgantown-wv",
+    "metro": "Morgantown, WV",
+    "state": "WV",
+    "homeValue": 223164,
+    "rent": 1404,
+    "appreciation5yr": 0.033
+  },
+  {
+    "id": "la-crosse-wi",
+    "metro": "La Crosse, WI",
+    "state": "WI",
+    "homeValue": 331744,
+    "rent": 1125,
+    "appreciation5yr": 0.0627
+  },
+  {
+    "id": "napa-ca",
+    "metro": "Napa, CA",
+    "state": "CA",
+    "homeValue": 893495,
+    "rent": 2821,
+    "appreciation5yr": 0.0164
+  },
+  {
+    "id": "rapid-city-sd",
+    "metro": "Rapid City, SD",
+    "state": "SD",
+    "homeValue": 372073,
+    "rent": 1381,
+    "appreciation5yr": 0.066
+  },
+  {
+    "id": "sumter-sc",
+    "metro": "Sumter, SC",
+    "state": "SC",
+    "homeValue": 208642,
+    "rent": 1428,
+    "appreciation5yr": 0.0353
+  },
+  {
+    "id": "eureka-ca",
+    "metro": "Eureka, CA",
+    "state": "CA",
+    "homeValue": 427858,
+    "rent": 1471,
+    "appreciation5yr": -0.0057
+  },
+  {
+    "id": "springfield-oh",
+    "metro": "Springfield, OH",
+    "state": "OH",
+    "homeValue": 201501,
+    "rent": 1180,
+    "appreciation5yr": 0.0737
+  },
+  {
+    "id": "harrisonburg-va",
+    "metro": "Harrisonburg, VA",
+    "state": "VA",
+    "homeValue": 350270,
+    "rent": 1776,
+    "appreciation5yr": 0.0528
+  },
+  {
+    "id": "battle-creek-mi",
+    "metro": "Battle Creek, MI",
+    "state": "MI",
+    "homeValue": 185633,
+    "rent": 1164,
+    "appreciation5yr": 0.0621
+  },
+  {
+    "id": "sherman-tx",
+    "metro": "Sherman, TX",
+    "state": "TX",
+    "homeValue": 291559,
+    "rent": 1427,
+    "appreciation5yr": 0.0408
+  },
+  {
+    "id": "manhattan-ks",
+    "metro": "Manhattan, KS",
+    "state": "KS",
+    "homeValue": 266258,
+    "rent": 1177,
+    "appreciation5yr": 0.0569
+  },
+  {
+    "id": "carbondale-il",
+    "metro": "Carbondale, IL",
+    "state": "IL",
+    "homeValue": 150517,
+    "rent": 884,
+    "appreciation5yr": 0.0355
+  },
+  {
+    "id": "johnstown-pa",
+    "metro": "Johnstown, PA",
+    "state": "PA",
+    "homeValue": 110692,
+    "rent": 862,
+    "appreciation5yr": -0.0183
+  },
+  {
+    "id": "jonesboro-ar",
+    "metro": "Jonesboro, AR",
+    "state": "AR",
+    "homeValue": 203708,
+    "rent": 1315,
+    "appreciation5yr": 0.0498
+  },
+  {
+    "id": "bismarck-nd",
+    "metro": "Bismarck, ND",
+    "state": "ND",
+    "homeValue": 351965,
+    "rent": 1303,
+    "appreciation5yr": 0.053
+  },
+  {
+    "id": "hammond-la",
+    "metro": "Hammond, LA",
+    "state": "LA",
+    "homeValue": 223550,
+    "rent": 1329,
+    "appreciation5yr": 0.006
+  },
+  {
+    "id": "pittsfield-ma",
+    "metro": "Pittsfield, MA",
+    "state": "MA",
+    "homeValue": 384584,
+    "rent": 1643,
+    "appreciation5yr": 0.0696
+  },
+  {
+    "id": "mount-vernon-wa",
+    "metro": "Mount Vernon, WA",
+    "state": "WA",
+    "homeValue": 586243,
+    "rent": 2135,
+    "appreciation5yr": 0.0434
+  },
+  {
+    "id": "jamestown-ny",
+    "metro": "Jamestown, NY",
+    "state": "NY",
+    "homeValue": 171587,
+    "rent": 1111,
+    "appreciation5yr": 0.072
+  },
+  {
+    "id": "the-villages-fl",
+    "metro": "The Villages, FL",
+    "state": "FL",
+    "homeValue": 388110,
+    "rent": 1749,
+    "appreciation5yr": 0.0527
+  },
+  {
+    "id": "albany-or",
+    "metro": "Albany, OR",
+    "state": "OR",
+    "homeValue": 411482,
+    "rent": 1610,
+    "appreciation5yr": 0.0458
+  },
+  {
+    "id": "glens-falls-ny",
+    "metro": "Glens Falls, NY",
+    "state": "NY",
+    "homeValue": 307638,
+    "rent": 1433,
+    "appreciation5yr": 0.0619
+  },
+  {
+    "id": "lawton-ok",
+    "metro": "Lawton, OK",
+    "state": "OK",
+    "homeValue": 153146,
+    "rent": 1121,
+    "appreciation5yr": 0.0531
+  },
+  {
+    "id": "cleveland-tn",
+    "metro": "Cleveland, TN",
+    "state": "TN",
+    "homeValue": 310254,
+    "rent": 1412,
+    "appreciation5yr": 0.0688
+  },
+  {
+    "id": "sierra-vista-az",
+    "metro": "Sierra Vista, AZ",
+    "state": "AZ",
+    "homeValue": 263506,
+    "rent": 1243,
+    "appreciation5yr": 0.0438
+  },
+  {
+    "id": "ames-ia",
+    "metro": "Ames, IA",
+    "state": "IA",
+    "homeValue": 276676,
+    "rent": 1021,
+    "appreciation5yr": 0.049
+  },
+  {
+    "id": "mansfield-oh",
+    "metro": "Mansfield, OH",
+    "state": "OH",
+    "homeValue": 194425,
+    "rent": 905,
+    "appreciation5yr": 0.0784
+  },
+  {
+    "id": "staunton-va",
+    "metro": "Staunton, VA",
+    "state": "VA",
+    "homeValue": 330951,
+    "rent": 1511,
+    "appreciation5yr": 0.054
+  },
+  {
+    "id": "augusta-me",
+    "metro": "Augusta, ME",
+    "state": "ME",
+    "homeValue": 316431,
+    "rent": 1476,
+    "appreciation5yr": 0.0739
+  },
+  {
+    "id": "altoona-pa",
+    "metro": "Altoona, PA",
+    "state": "PA",
+    "homeValue": 176472,
+    "rent": 1020,
+    "appreciation5yr": 0.0329
+  },
+  {
+    "id": "new-bern-nc",
+    "metro": "New Bern, NC",
+    "state": "NC",
+    "homeValue": 261684,
+    "rent": 1551,
+    "appreciation5yr": 0.0763
+  },
+  {
+    "id": "farmington-nm",
+    "metro": "Farmington, NM",
+    "state": "NM",
+    "homeValue": 270276,
+    "rent": 1362,
+    "appreciation5yr": 0.0607
+  },
+  {
+    "id": "st-joseph-mo",
+    "metro": "St. Joseph, MO",
+    "state": "MO",
+    "homeValue": 212755,
+    "rent": 914,
+    "appreciation5yr": 0.0624
+  },
+  {
+    "id": "san-angelo-tx",
+    "metro": "San Angelo, TX",
+    "state": "TX",
+    "homeValue": 237067,
+    "rent": 1274,
+    "appreciation5yr": 0.0386
+  },
+  {
+    "id": "wenatchee-wa",
+    "metro": "Wenatchee, WA",
+    "state": "WA",
+    "homeValue": 521280,
+    "rent": 1820,
+    "appreciation5yr": 0.0345
+  },
+  {
+    "id": "owensboro-ky",
+    "metro": "Owensboro, KY",
+    "state": "KY",
+    "homeValue": 210299,
+    "rent": 1159,
+    "appreciation5yr": 0.0572
+  },
+  {
+    "id": "holland-mi",
+    "metro": "Holland, MI",
+    "state": "MI",
+    "homeValue": 345407,
+    "rent": 1840,
+    "appreciation5yr": 0.0626
+  },
+  {
+    "id": "lumberton-nc",
+    "metro": "Lumberton, NC",
+    "state": "NC",
+    "homeValue": 131367,
+    "rent": 1077,
+    "appreciation5yr": 0.0523
+  },
+  {
+    "id": "lawrence-ks",
+    "metro": "Lawrence, KS",
+    "state": "KS",
+    "homeValue": 337700,
+    "rent": 1334,
+    "appreciation5yr": 0.0623
+  },
+  {
+    "id": "goldsboro-nc",
+    "metro": "Goldsboro, NC",
+    "state": "NC",
+    "homeValue": 185203,
+    "rent": 1372,
+    "appreciation5yr": 0.0428
+  },
+  {
+    "id": "watertown-ny",
+    "metro": "Watertown, NY",
+    "state": "NY",
+    "homeValue": 223698,
+    "rent": 1424,
+    "appreciation5yr": 0.0561
+  },
+  {
+    "id": "sheboygan-wi",
+    "metro": "Sheboygan, WI",
+    "state": "WI",
+    "homeValue": 318962,
+    "rent": 1125,
+    "appreciation5yr": 0.0789
+  },
+  {
+    "id": "weirton-wv",
+    "metro": "Weirton, WV",
+    "state": "OH",
+    "homeValue": 130889,
+    "rent": 858,
+    "appreciation5yr": 0.0439
+  },
+  {
+    "id": "missoula-mt",
+    "metro": "Missoula, MT",
+    "state": "MT",
+    "homeValue": 575317,
+    "rent": 1522,
+    "appreciation5yr": 0.063
+  },
+  {
+    "id": "bozeman-mt",
+    "metro": "Bozeman, MT",
+    "state": "MT",
+    "homeValue": 701066,
+    "rent": 2205,
+    "appreciation5yr": 0.0437
+  },
+  {
+    "id": "anniston-al",
+    "metro": "Anniston, AL",
+    "state": "AL",
+    "homeValue": 170473,
+    "rent": 994,
+    "appreciation5yr": 0.0371
+  },
+  {
+    "id": "beckley-wv",
+    "metro": "Beckley, WV",
+    "state": "WV",
+    "homeValue": 145847,
+    "rent": 997,
+    "appreciation5yr": 0.0572
+  },
+  {
+    "id": "williamsport-pa",
+    "metro": "Williamsport, PA",
+    "state": "PA",
+    "homeValue": 232913,
+    "rent": 1046,
+    "appreciation5yr": 0.0472
+  },
+  {
+    "id": "brunswick-ga",
+    "metro": "Brunswick, GA",
+    "state": "GA",
+    "homeValue": 323874,
+    "rent": 1653,
+    "appreciation5yr": 0.0613
+  },
+  {
+    "id": "twin-falls-id",
+    "metro": "Twin Falls, ID",
+    "state": "ID",
+    "homeValue": 383763,
+    "rent": 1603,
+    "appreciation5yr": 0.0558
+  },
+  {
+    "id": "california-md",
+    "metro": "California, MD",
+    "state": "MD",
+    "homeValue": 432309,
+    "rent": 1807,
+    "appreciation5yr": 0.0354
+  },
+  {
+    "id": "cookeville-tn",
+    "metro": "Cookeville, TN",
+    "state": "TN",
+    "homeValue": 292275,
+    "rent": 1539,
+    "appreciation5yr": 0.068
+  },
+  {
+    "id": "muncie-in",
+    "metro": "Muncie, IN",
+    "state": "IN",
+    "homeValue": 168383,
+    "rent": 966,
+    "appreciation5yr": 0.0784
+  },
+  {
+    "id": "michigan-city-in",
+    "metro": "Michigan City, IN",
+    "state": "IN",
+    "homeValue": 254066,
+    "rent": 1177,
+    "appreciation5yr": 0.0691
+  },
+  {
+    "id": "roseburg-or",
+    "metro": "Roseburg, OR",
+    "state": "OR",
+    "homeValue": 343761,
+    "rent": 1264,
+    "appreciation5yr": 0.0457
+  },
+  {
+    "id": "lewiston-me",
+    "metro": "Lewiston, ME",
+    "state": "ME",
+    "homeValue": 328059,
+    "rent": 1494,
+    "appreciation5yr": 0.0741
+  },
+  {
+    "id": "longview-wa",
+    "metro": "Longview, WA",
+    "state": "WA",
+    "homeValue": 421326,
+    "rent": 1436,
+    "appreciation5yr": 0.0338
+  },
+  {
+    "id": "ogdensburg-ny",
+    "metro": "Ogdensburg, NY",
+    "state": "NY",
+    "homeValue": 138924,
+    "rent": 1213,
+    "appreciation5yr": 0.0528
+  },
+  {
+    "id": "kankakee-il",
+    "metro": "Kankakee, IL",
+    "state": "IL",
+    "homeValue": 221220,
+    "rent": 1320,
+    "appreciation5yr": 0.0592
+  },
+  {
+    "id": "bluefield-wv",
+    "metro": "Bluefield, WV",
+    "state": "VA",
+    "homeValue": 143634,
+    "rent": 860,
+    "appreciation5yr": 0.0539
+  },
+  {
+    "id": "show-low-az",
+    "metro": "Show Low, AZ",
+    "state": "AZ",
+    "homeValue": 394161,
+    "rent": 1853,
+    "appreciation5yr": 0.0519
+  },
+  {
+    "id": "richmond-ky",
+    "metro": "Richmond, KY",
+    "state": "KY",
+    "homeValue": 262378,
+    "rent": 1092,
+    "appreciation5yr": 0.0617
+  },
+  {
+    "id": "tullahoma-tn",
+    "metro": "Tullahoma, TN",
+    "state": "TN",
+    "homeValue": 315072,
+    "rent": 1440,
+    "appreciation5yr": 0.0742
+  },
+  {
+    "id": "whitewater-wi",
+    "metro": "Whitewater, WI",
+    "state": "WI",
+    "homeValue": 405877,
+    "rent": 1412,
+    "appreciation5yr": 0.0604
+  },
+  {
+    "id": "ithaca-ny",
+    "metro": "Ithaca, NY",
+    "state": "NY",
+    "homeValue": 347344,
+    "rent": 1902,
+    "appreciation5yr": 0.0687
+  },
+  {
+    "id": "grand-forks-nd",
+    "metro": "Grand Forks, ND",
+    "state": "MN",
+    "homeValue": 273101,
+    "rent": 1161,
+    "appreciation5yr": 0.0475
+  },
+  {
+    "id": "decatur-il",
+    "metro": "Decatur, IL",
+    "state": "IL",
+    "homeValue": 123889,
+    "rent": 1018,
+    "appreciation5yr": 0.059
+  },
+  {
+    "id": "lagrange-ga",
+    "metro": "LaGrange, GA",
+    "state": "GA",
+    "homeValue": 203736,
+    "rent": 1318,
+    "appreciation5yr": 0.0682
+  },
+  {
+    "id": "bay-city-mi",
+    "metro": "Bay City, MI",
+    "state": "MI",
+    "homeValue": 181663,
+    "rent": 1181,
+    "appreciation5yr": 0.0718
+  },
+  {
+    "id": "fond-du-lac-wi",
+    "metro": "Fond du Lac, WI",
+    "state": "WI",
+    "homeValue": 288412,
+    "rent": 1108,
+    "appreciation5yr": 0.0801
+  },
+  {
+    "id": "gettysburg-pa",
+    "metro": "Gettysburg, PA",
+    "state": "PA",
+    "homeValue": 333510,
+    "rent": 1236,
+    "appreciation5yr": 0.0551
+  },
+  {
+    "id": "gadsden-al",
+    "metro": "Gadsden, AL",
+    "state": "AL",
+    "homeValue": 181654,
+    "rent": 1125,
+    "appreciation5yr": 0.0532
+  },
+  {
+    "id": "kalispell-mt",
+    "metro": "Kalispell, MT",
+    "state": "MT",
+    "homeValue": 645655,
+    "rent": 2044,
+    "appreciation5yr": 0.0731
+  },
+  {
+    "id": "danville-va",
+    "metro": "Danville, VA",
+    "state": "VA",
+    "homeValue": 164829,
+    "rent": 1177,
+    "appreciation5yr": 0.0666
+  },
+  {
+    "id": "mankato-mn",
+    "metro": "Mankato, MN",
+    "state": "MN",
+    "homeValue": 305854,
+    "rent": 1319,
+    "appreciation5yr": 0.0578
+  },
+  {
+    "id": "lima-oh",
+    "metro": "Lima, OH",
+    "state": "OH",
+    "homeValue": 189401,
+    "rent": 1184,
+    "appreciation5yr": 0.0637
+  },
+  {
+    "id": "truckee-ca",
+    "metro": "Truckee, CA",
+    "state": "CA",
+    "homeValue": 613293,
+    "rent": 2575,
+    "appreciation5yr": 0.0107
+  },
+  {
+    "id": "sebring-fl",
+    "metro": "Sebring, FL",
+    "state": "FL",
+    "homeValue": 233709,
+    "rent": 1533,
+    "appreciation5yr": 0.0725
+  },
+  {
+    "id": "cheyenne-wy",
+    "metro": "Cheyenne, WY",
+    "state": "WY",
+    "homeValue": 389902,
+    "rent": 1459,
+    "appreciation5yr": 0.028
+  },
+  {
+    "id": "hot-springs-ar",
+    "metro": "Hot Springs, AR",
+    "state": "AR",
+    "homeValue": 245342,
+    "rent": 1199,
+    "appreciation5yr": 0.0623
+  },
+  {
+    "id": "adrian-mi",
+    "metro": "Adrian, MI",
+    "state": "MI",
+    "homeValue": 239494,
+    "rent": 1121,
+    "appreciation5yr": 0.0499
+  },
+  {
+    "id": "shelby-nc",
+    "metro": "Shelby, NC",
+    "state": "NC",
+    "homeValue": 218228,
+    "rent": 1223,
+    "appreciation5yr": 0.0356
+  },
+  {
+    "id": "dubuque-ia",
+    "metro": "Dubuque, IA",
+    "state": "IA",
+    "homeValue": 275067,
+    "rent": 1116,
+    "appreciation5yr": 0.063
+  },
+  {
+    "id": "meridian-ms",
+    "metro": "Meridian, MS",
+    "state": "MS",
+    "homeValue": 121370,
+    "rent": 1359,
+    "appreciation5yr": 0.014
+  },
+  {
+    "id": "pinehurst-nc",
+    "metro": "Pinehurst, NC",
+    "state": "NC",
+    "homeValue": 414063,
+    "rent": 1849,
+    "appreciation5yr": 0.0728
+  },
+  {
+    "id": "paducah-ky",
+    "metro": "Paducah, KY",
+    "state": "KY",
+    "homeValue": 166652,
+    "rent": 1210,
+    "appreciation5yr": 0.0563
+  },
+  {
+    "id": "victoria-tx",
+    "metro": "Victoria, TX",
+    "state": "TX",
+    "homeValue": 222041,
+    "rent": 1156,
+    "appreciation5yr": 0.034
+  },
+  {
+    "id": "rome-ga",
+    "metro": "Rome, GA",
+    "state": "GA",
+    "homeValue": 234343,
+    "rent": 1242,
+    "appreciation5yr": 0.0622
+  },
+  {
+    "id": "sevierville-tn",
+    "metro": "Sevierville, TN",
+    "state": "TN",
+    "homeValue": 404465,
+    "rent": 1781,
+    "appreciation5yr": 0.0438
+  },
+  {
+    "id": "moses-lake-wa",
+    "metro": "Moses Lake, WA",
+    "state": "WA",
+    "homeValue": 361122,
+    "rent": 1488,
+    "appreciation5yr": 0.05
+  },
+  {
+    "id": "ashtabula-oh",
+    "metro": "Ashtabula, OH",
+    "state": "OH",
+    "homeValue": 177212,
+    "rent": 906,
+    "appreciation5yr": 0.0704
+  },
+  {
+    "id": "cape-girardeau-mo",
+    "metro": "Cape Girardeau, MO",
+    "state": "MO",
+    "homeValue": 230626,
+    "rent": 948,
+    "appreciation5yr": 0.0519
+  },
+  {
+    "id": "fairbanks-ak",
+    "metro": "Fairbanks, AK",
+    "state": "AK",
+    "homeValue": 305562,
+    "rent": 1752,
+    "appreciation5yr": 0.0178
+  },
+  {
+    "id": "brainerd-mn",
+    "metro": "Brainerd, MN",
+    "state": "MN",
+    "homeValue": 356167,
+    "rent": 1131,
+    "appreciation5yr": 0.0661
+  },
+  {
+    "id": "cumberland-md",
+    "metro": "Cumberland, MD",
+    "state": "MD",
+    "homeValue": 164884,
+    "rent": 1030,
+    "appreciation5yr": 0.0467
+  },
+  {
+    "id": "ocean-city-nj",
+    "metro": "Ocean City, NJ",
+    "state": "NJ",
+    "homeValue": 784508,
+    "rent": 2387,
+    "appreciation5yr": 0.0808
+  },
+  {
+    "id": "corvallis-or",
+    "metro": "Corvallis, OR",
+    "state": "OR",
+    "homeValue": 557693,
+    "rent": 1923,
+    "appreciation5yr": 0.0436
+  },
+  {
+    "id": "pocatello-id",
+    "metro": "Pocatello, ID",
+    "state": "ID",
+    "homeValue": 350858,
+    "rent": 1122,
+    "appreciation5yr": 0.0605
+  },
+  {
+    "id": "corning-ny",
+    "metro": "Corning, NY",
+    "state": "NY",
+    "homeValue": 167262,
+    "rent": 1250,
+    "appreciation5yr": 0.0468
+  },
+  {
+    "id": "new-philadelphia-oh",
+    "metro": "New Philadelphia, OH",
+    "state": "OH",
+    "homeValue": 212888,
+    "rent": 878,
+    "appreciation5yr": 0.0602
+  }
+]
