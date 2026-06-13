@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { CalcInputs } from "../engine/calculator";
+import type { AppInputs } from "../engine/defaults";
 import { STANDARD_DEDUCTION } from "../engine/taxConstants";
 import { estimateMarginalRate, STATE_OPTIONS, STATE_TAX } from "../engine/taxRates";
 import type { LocationData, MarketData } from "../data/types";
@@ -7,7 +7,7 @@ import { pct, usd } from "../lib/format";
 import { Disclosure, Field, LiveBadge, MoneyInput, Segmented, Slider } from "../ui";
 import { LocationPicker } from "./LocationPicker";
 
-type Patch = (p: Partial<CalcInputs>) => void;
+type Patch = (p: Partial<AppInputs>) => void;
 
 function SliderRow({
   label,
@@ -140,7 +140,7 @@ function StateSelect({ value, onChange }: { value: string; onChange: (s: string)
  * and its income tax feeds the SALT base. A labelled group, not a <label>, since it
  * holds several controls.
  */
-function TaxRateControl({ inputs, patch }: { inputs: CalcInputs; patch: Patch }) {
+function TaxRateControl({ inputs, patch }: { inputs: AppInputs; patch: Patch }) {
   const auto = inputs.taxAuto;
   const hasIncome = inputs.annualIncome > 0;
   const est = estimateMarginalRate(inputs.annualIncome, inputs.filingJointly, inputs.taxState, inputs.localTaxRate);
@@ -229,7 +229,7 @@ export function Controls({
   onSelectLocation,
   market,
 }: {
-  inputs: CalcInputs;
+  inputs: AppInputs;
   patch: Patch;
   locations: LocationData[];
   selected: LocationData;

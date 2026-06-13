@@ -2,6 +2,21 @@ import type { CalcInputs } from "./calculator";
 import { SALT_CAP, STANDARD_DEDUCTION } from "./taxConstants";
 import type { LocationData, MarketData, StateRateTable } from "../data/types";
 
+/**
+ * UI-only tax-estimator state. The engine never reads these: the controls project
+ * them into `marginalTaxRate` + `otherSALT` before calling `calculate`, so they're
+ * kept out of the pure engine contract (`CalcInputs`) and bolted on here instead.
+ */
+export interface TaxEstimatorState {
+  taxAuto: boolean; // estimate the marginal rate from income/state instead of typing it
+  annualIncome: number; // household gross income, for the marginal-rate estimate
+  taxState: string; // 2-letter state code ("US" = no state income tax applied)
+  localTaxRate: number; // optional city/county income tax added onto the estimate
+}
+
+/** Everything the app holds in its input state: the engine contract plus UI state. */
+export type AppInputs = CalcInputs & TaxEstimatorState;
+
 const clamp = (n: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, n));
 
 /**
@@ -18,7 +33,7 @@ export function buildInputs(
   propertyTax: StateRateTable,
   insurance: StateRateTable,
   filingJointly = true,
-): CalcInputs {
+): AppInputs {
   return {
     homePrice: loc.homeValue,
     downPaymentPct: 0.2,

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import type { CalcInputs, CalcResult } from "../engine/calculator";
+import type { CalcResult } from "../engine/calculator";
+import type { AppInputs } from "../engine/defaults";
 import {
   FEDERAL_BRACKETS,
   STATE_TAX,
@@ -74,7 +75,7 @@ export function Derivation({
   market,
   selected,
 }: {
-  inputs: CalcInputs;
+  inputs: AppInputs;
   result: CalcResult;
   market: MarketData;
   selected: LocationData;

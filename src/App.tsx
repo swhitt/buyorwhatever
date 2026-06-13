@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { calculate, type CalcInputs } from "./engine/calculator";
-import { buildInputs } from "./engine/defaults";
+import { buildInputs, type AppInputs } from "./engine/defaults";
 import { estimateMarginalRate, estimateStateIncomeTax } from "./engine/taxRates";
 import { Controls } from "./components/Controls";
 import { Breakdown } from "./components/Breakdown";
@@ -64,13 +64,13 @@ const PERSIST_SPEC = {
   annualIncome: "number",
   taxState: "string",
   localTaxRate: "number",
-} as const satisfies Partial<Record<keyof CalcInputs, "number" | "mode" | "boolean" | "string">>;
+} as const satisfies Partial<Record<keyof AppInputs, "number" | "mode" | "boolean" | "string">>;
 const PERSIST_KEYS = Object.keys(PERSIST_SPEC) as (keyof typeof PERSIST_SPEC)[];
 // Of those, the ones tied to a specific place: cleared when you pick a new metro
 // (the override was for the old location), so they revert to that metro's default.
 // The flat-dollar `*Annual` figures are deliberately NOT here: a number the user
 // typed in $ mode is personal and survives a location switch (see selectLocation).
-const LOCATION_FIELDS: (keyof CalcInputs)[] = [
+const LOCATION_FIELDS: (keyof AppInputs)[] = [
   "homePrice",
   "monthlyRent",
   "propertyTaxRate",
@@ -92,12 +92,12 @@ function storedLocation(): LocationData {
 // Whitelist to known fields and validate each by kind, so corrupted storage
 // (e.g. {homePrice: null}, {maintenanceMode: 7}) can't reach the engine and
 // render $NaN / a bogus $0 home or break a control.
-function loadOverrides(): Partial<CalcInputs> {
+function loadOverrides(): Partial<AppInputs> {
   try {
     const raw = localStorage.getItem(OVERRIDES_KEY);
     if (!raw) return {};
     const parsed = JSON.parse(raw) as Record<string, unknown>;
-    const clean: Partial<CalcInputs> = {};
+    const clean: Partial<AppInputs> = {};
     for (const k of PERSIST_KEYS) {
       const v = parsed[k];
       switch (PERSIST_SPEC[k]) {
@@ -124,7 +124,7 @@ function loadOverrides(): Partial<CalcInputs> {
   return {};
 }
 
-function saveOverrides(o: Partial<CalcInputs>) {
+function saveOverrides(o: Partial<AppInputs>) {
   try {
     localStorage.setItem(OVERRIDES_KEY, JSON.stringify(o));
   } catch {
@@ -135,7 +135,7 @@ function saveOverrides(o: Partial<CalcInputs>) {
 // A ?s= share token decoded into a starting location + overrides, or null. It
 // carries only the fields the sharer changed from defaults, so we validate each
 // against a reference inputs object by type and re-derive the rest from live data.
-function readShareLink(): { loc: LocationData; overrides: Partial<CalcInputs> } | null {
+function readShareLink(): { loc: LocationData; overrides: Partial<AppInputs> } | null {
   try {
     const token = new URLSearchParams(window.location.search).get("s");
     if (!token) return null;
@@ -144,8 +144,8 @@ function readShareLink(): { loc: LocationData; overrides: Partial<CalcInputs> } 
     const loc = (payload.m ? locations.find((l) => l.id === payload.m) : null) ?? usHome;
     const ref = buildInputs(usHome, marketRaw as MarketData, propertyTax, insurance);
     const o = payload.o ?? {};
-    const overrides: Partial<CalcInputs> = {};
-    for (const k of Object.keys(ref) as (keyof CalcInputs)[]) {
+    const overrides: Partial<AppInputs> = {};
+    for (const k of Object.keys(ref) as (keyof AppInputs)[]) {
       if (!(k in o)) continue;
       const v = o[k];
       const r = ref[k];
@@ -163,7 +163,7 @@ function readShareLink(): { loc: LocationData; overrides: Partial<CalcInputs> } 
 const SHARE = typeof window !== "undefined" ? readShareLink() : null;
 
 export function App() {
-  const overrides = useRef<Partial<CalcInputs>>(SHARE ? SHARE.overrides : loadOverrides());
+  const overrides = useRef<Partial<AppInputs>>(SHARE ? SHARE.overrides : loadOverrides());
   // While viewing a ?s= share link, don't write to the visitor's own localStorage;
   // the link is authoritative for the page and Reset exits the shared view.
   const shareActive = useRef(SHARE != null);
@@ -173,7 +173,7 @@ export function App() {
   const touched = useRef(false);
   const [market, setMarket] = useState<MarketData>(() => marketRaw as MarketData);
   const [selected, setSelected] = useState<LocationData>(() => (SHARE ? SHARE.loc : storedLocation()));
-  const [inputs, setInputs] = useState<CalcInputs>(() => ({
+  const [inputs, setInputs] = useState<AppInputs>(() => ({
     ...buildInputs(SHARE ? SHARE.loc : storedLocation(), marketRaw as MarketData, propertyTax, insurance),
     ...overrides.current, // restore the user's remembered edits, or the shared ones
   }));
@@ -201,7 +201,7 @@ export function App() {
   }, [selected]);
 
   // Manual edits from the controls. Persist the ones we remember.
-  const patch = (p: Partial<CalcInputs>) => {
+  const patch = (p: Partial<AppInputs>) => {
     touched.current = true;
     setInputs((prev) => ({ ...prev, ...p }));
     let changed = false;
@@ -324,7 +324,7 @@ export function App() {
     try {
       const defaults = buildInputs(selected, market, propertyTax, insurance);
       const o: Record<string, unknown> = {};
-      for (const k of Object.keys(inputs) as (keyof CalcInputs)[]) {
+      for (const k of Object.keys(inputs) as (keyof AppInputs)[]) {
         if (inputs[k] !== defaults[k]) o[k] = inputs[k];
       }
       const url = `${window.location.origin}${window.location.pathname}?s=${encodeShare({ m: selected.id, o })}`;

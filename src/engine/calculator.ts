@@ -65,13 +65,6 @@ export interface CalcInputs {
   saltCap: number; // e.g. 10000
   filingJointly: boolean; // cap-gains exclusion 500k vs 250k
   capitalGainsRate: number; // e.g. 0.15
-  // UI-derived: when `taxAuto` is on, the controls estimate `marginalTaxRate`
-  // from income + filing status + state (federal marginal + state marginal). The
-  // engine never reads these three; it only consumes the resulting marginalTaxRate.
-  taxAuto: boolean;
-  annualIncome: number; // household gross income, for the marginal-rate estimate
-  taxState: string; // 2-letter state code ("US" = no state income tax applied)
-  localTaxRate: number; // optional city/county income tax added onto the estimate
 
   // Rent side
   monthlyRent: number; // market rent being compared
