@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import type { HorizonPoint } from "../engine/calculator";
 import { usd, usdCompact } from "../lib/format";
+import { breakevenLabelPosition, yearTicks } from "../lib/ticks";
 
 export function CrossoverChart({
   data,
@@ -52,7 +53,7 @@ export function CrossoverChart({
             axisLine={{ stroke: "var(--color-line)" }}
             tick={{ fontSize: 12, fill: "var(--color-muted)" }}
             tickFormatter={(y) => `${y}y`}
-            ticks={[1, 5, 10, 15, 20, 25, 30].filter((t) => t <= rows.length)}
+            ticks={yearTicks(rows.length)}
           />
           <YAxis
             tickLine={false}
@@ -107,10 +108,9 @@ export function CrossoverChart({
           )}
           {cross && (
             <ReferenceDot x={cross.year} y={cross.buyNetCost} r={5} fill="var(--color-ink)" stroke="var(--color-paper)" strokeWidth={2}>
-              {/* Past ~62% of the x-range a right-anchored label overflows the plot, so flip it left of the dot. */}
               <Label
                 value={`breakeven ${breakevenYear}y`}
-                position={breakevenYear! > rows.length * 0.62 ? "left" : "right"}
+                position={breakevenLabelPosition(breakevenYear!, rows.length)}
                 fontSize={11}
                 fill="var(--color-muted)"
               />

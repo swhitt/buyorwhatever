@@ -18,3 +18,11 @@ export function niceTicks(min: number, max: number): number[] {
   for (let t = Math.ceil(min / step) * step; t <= max + step * 1e-6; t += step) out.push(Math.round(t));
   return out;
 }
+
+/** X-axis year ticks shared by the horizon charts, capped at the data length. */
+export const yearTicks = (years: number): number[] => [1, 5, 10, 15, 20, 25, 30].filter((t) => t <= years);
+
+/** Which side to anchor a breakeven label so it stays on-plot: past ~62% of the
+ *  x-range a right-anchored label would overflow, so flip it left of the dot. */
+export const breakevenLabelPosition = (year: number, count: number): "left" | "right" =>
+  year > count * 0.62 ? "left" : "right";
