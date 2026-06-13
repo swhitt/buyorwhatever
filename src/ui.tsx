@@ -15,7 +15,7 @@ export function Field({
   return (
     <label className="block">
       <div className="mb-1.5 flex items-baseline justify-between gap-2">
-        <span className="text-sm font-medium text-ink">{label}</span>
+        <span className="min-w-0 text-sm font-medium text-ink">{label}</span>
         {badge}
       </div>
       {children}
@@ -27,7 +27,7 @@ export function Field({
 /** Small pill that cites a live data value next to an input. */
 export function LiveBadge({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-rent-soft px-2 py-0.5 text-[11px] font-medium text-rent">
+    <span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-rent-soft px-2 py-0.5 text-[11px] font-medium text-rent">
       <span className="h-1.5 w-1.5 rounded-full bg-rent" />
       {children}
     </span>
@@ -93,7 +93,7 @@ export function Slider({
     <div className="flex items-center gap-3">
       <input
         type="range"
-        className="flex-1"
+        className="min-w-0 flex-1"
         min={min}
         max={max}
         step={step}

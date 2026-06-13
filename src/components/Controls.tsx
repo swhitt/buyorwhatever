@@ -193,27 +193,25 @@ export function Controls({
             format={(n) => pct(n, 2)}
             badge={<LiveBadge>{selected.state} avg</LiveBadge>}
           />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <SliderRow
-              label="Maintenance / yr"
-              value={inputs.maintenanceRate}
-              min={0}
-              max={0.03}
-              step={0.0025}
-              onChange={(n) => patch({ maintenanceRate: n })}
-              format={(n) => pct(n, 1)}
-            />
-            <SliderRow
-              label="Home insurance / yr"
-              value={inputs.homeInsuranceRate}
-              min={0}
-              max={0.03}
-              step={0.0005}
-              onChange={(n) => patch({ homeInsuranceRate: n })}
-              format={(n) => pct(n, 2)}
-              badge={<LiveBadge>{selected.state} avg</LiveBadge>}
-            />
-          </div>
+          <SliderRow
+            label="Maintenance / yr"
+            value={inputs.maintenanceRate}
+            min={0}
+            max={0.03}
+            step={0.0025}
+            onChange={(n) => patch({ maintenanceRate: n })}
+            format={(n) => pct(n, 1)}
+          />
+          <SliderRow
+            label="Home insurance / yr"
+            value={inputs.homeInsuranceRate}
+            min={0}
+            max={0.03}
+            step={0.0005}
+            onChange={(n) => patch({ homeInsuranceRate: n })}
+            format={(n) => pct(n, 2)}
+            badge={<LiveBadge>{selected.state} avg</LiveBadge>}
+          />
           <SliderRow
             label="Marginal tax rate"
             value={inputs.marginalTaxRate}
@@ -224,26 +222,24 @@ export function Controls({
             format={(n) => pct(n, 0)}
             hint="Federal + state + local. Drives the value of the mortgage-interest and property-tax deductions."
           />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <SliderRow
-              label="Buying closing costs"
-              value={inputs.buyingClosingPct}
-              min={0}
-              max={0.06}
-              step={0.0025}
-              onChange={(n) => patch({ buyingClosingPct: n })}
-              format={(n) => pct(n, 1)}
-            />
-            <SliderRow
-              label="Selling costs"
-              value={inputs.sellingCostPct}
-              min={0}
-              max={0.1}
-              step={0.0025}
-              onChange={(n) => patch({ sellingCostPct: n })}
-              format={(n) => pct(n, 1)}
-            />
-          </div>
+          <SliderRow
+            label="Buying closing costs"
+            value={inputs.buyingClosingPct}
+            min={0}
+            max={0.06}
+            step={0.0025}
+            onChange={(n) => patch({ buyingClosingPct: n })}
+            format={(n) => pct(n, 1)}
+          />
+          <SliderRow
+            label="Selling costs"
+            value={inputs.sellingCostPct}
+            min={0}
+            max={0.1}
+            step={0.0025}
+            onChange={(n) => patch({ sellingCostPct: n })}
+            format={(n) => pct(n, 1)}
+          />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="HOA / common (monthly)">
               <MoneyInput value={inputs.hoaMonthly} onChange={(n) => patch({ hoaMonthly: n })} step={25} />

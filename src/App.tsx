@@ -23,7 +23,8 @@ const propertyTax = propertyTaxRaw as unknown as PropertyTaxTable;
 const insurance = insuranceRaw as unknown as PropertyTaxTable;
 
 const usHome = locations.find((l) => l.id === "united-states") ?? locations[0];
-const METRO_KEY = "bow:metro";
+const METRO_KEY = "bow:metro"; // last selected metro (detected or chosen)
+const HOME_KEY = "bow:home"; // the auto-detected locale, never overwritten by manual picks
 const OVERRIDES_KEY = "bow:overrides";
 
 // Manual edits we remember across reloads.
@@ -113,11 +114,45 @@ export function App() {
     }
   }
 
-  // Drop every manual edit and rebuild from the selected location's defaults.
+  // Jump to a location with its defaults (no manual overrides applied).
+  function goTo(loc: LocationData) {
+    setSelected(loc);
+    setInputs(buildInputs(loc, market, propertyTax, insurance));
+    try {
+      localStorage.setItem(METRO_KEY, loc.id);
+    } catch {
+      /* storage unavailable */
+    }
+  }
+
+  // Reset = back to your locale's defaults: drop manual edits and return to the
+  // auto-detected home metro (re-detecting if we don't have it remembered yet).
   function reset() {
     overrides.current = {};
     saveOverrides({});
-    setInputs(buildInputs(selected, market, propertyTax, insurance));
+    let homeId: string | null = null;
+    try {
+      homeId = localStorage.getItem(HOME_KEY);
+    } catch {
+      /* storage unavailable */
+    }
+    const home = homeId ? locations.find((l) => l.id === homeId) : undefined;
+    if (home) {
+      goTo(home);
+      return;
+    }
+    // No remembered home yet: reset the current locale now, detect home in the
+    // background and hop to it (silent fallback keeps the current locale).
+    goTo(selected);
+    detectMetro(locations).then((loc) => {
+      if (!loc) return;
+      try {
+        localStorage.setItem(HOME_KEY, loc.id);
+      } catch {
+        /* storage unavailable */
+      }
+      goTo(loc);
+    });
   }
 
   // First visit with no saved metro: auto-detect from IP (silent fallback to US).
@@ -134,7 +169,13 @@ export function App() {
     if (stored) return;
     let cancelled = false;
     detectMetro(locations).then((loc) => {
-      if (!cancelled && loc) selectLocation(loc);
+      if (cancelled || !loc) return;
+      try {
+        localStorage.setItem(HOME_KEY, loc.id); // remember the locale for Reset
+      } catch {
+        /* storage unavailable */
+      }
+      selectLocation(loc);
     });
     return () => {
       cancelled = true;
@@ -156,7 +197,7 @@ export function App() {
               <button
                 type="button"
                 onClick={reset}
-                title="Reset every input to the defaults for the selected location"
+                title="Reset to your location's defaults"
                 className="inline-flex items-center gap-1 text-xs font-medium text-muted transition-colors hover:text-ink"
               >
                 <svg
