@@ -7,6 +7,7 @@ import { Breakdown } from "./components/Breakdown";
 import { Derivation } from "./components/Derivation";
 import { Disclosure } from "./ui";
 import { monthsAndYears, pct, usd } from "./lib/format";
+import { decodeShare, encodeShare } from "./lib/share";
 import { ThemeToggle } from "./theme";
 import { detectMetro } from "./geo";
 import { fetchLiveMarket } from "./data/live";
@@ -125,15 +126,49 @@ function saveOverrides(o: Partial<CalcInputs>) {
   }
 }
 
+// A ?s= share token decoded into a starting location + overrides, or null. It
+// carries only the fields the sharer changed from defaults, so we validate each
+// against a reference inputs object by type and re-derive the rest from live data.
+function readShareLink(): { loc: LocationData; overrides: Partial<CalcInputs> } | null {
+  try {
+    const token = new URLSearchParams(window.location.search).get("s");
+    if (!token) return null;
+    const payload = decodeShare(token);
+    if (!payload) return null;
+    const loc = (payload.m ? locations.find((l) => l.id === payload.m) : null) ?? usHome;
+    const ref = buildInputs(usHome, marketRaw as MarketData, propertyTax, insurance);
+    const o = payload.o ?? {};
+    const overrides: Partial<CalcInputs> = {};
+    for (const k of Object.keys(ref) as (keyof CalcInputs)[]) {
+      if (!(k in o)) continue;
+      const v = o[k];
+      const r = ref[k];
+      if (typeof r === "number" && typeof v === "number" && Number.isFinite(v)) overrides[k] = v as never;
+      else if (typeof r === "boolean" && typeof v === "boolean") overrides[k] = v as never;
+      else if (typeof r === "string" && typeof v === "string") overrides[k] = v as never;
+    }
+    return { loc, overrides };
+  } catch {
+    return null;
+  }
+}
+
+// Decoded once at module load (before first render) so the initial state can use it.
+const SHARE = typeof window !== "undefined" ? readShareLink() : null;
+
 export function App() {
-  const overrides = useRef<Partial<CalcInputs>>(loadOverrides());
+  const overrides = useRef<Partial<CalcInputs>>(SHARE ? SHARE.overrides : loadOverrides());
+  // While viewing a ?s= share link, don't write to the visitor's own localStorage;
+  // the link is authoritative for the page and Reset exits the shared view.
+  const shareActive = useRef(SHARE != null);
+  const [copied, setCopied] = useState(false);
   // True once the user edits any input; gates the one-time re-seed from live data.
   const touched = useRef(false);
   const [market, setMarket] = useState<MarketData>(() => marketRaw as MarketData);
-  const [selected, setSelected] = useState<LocationData>(storedLocation);
+  const [selected, setSelected] = useState<LocationData>(() => (SHARE ? SHARE.loc : storedLocation()));
   const [inputs, setInputs] = useState<CalcInputs>(() => ({
-    ...buildInputs(storedLocation(), marketRaw as MarketData, propertyTax, insurance),
-    ...overrides.current, // restore the user's remembered manual edits
+    ...buildInputs(SHARE ? SHARE.loc : storedLocation(), marketRaw as MarketData, propertyTax, insurance),
+    ...overrides.current, // restore the user's remembered edits, or the shared ones
   }));
 
   // When the tax-rate estimator is on, derive the deduction inputs from income +
@@ -169,7 +204,7 @@ export function App() {
         changed = true;
       }
     }
-    if (changed) saveOverrides(overrides.current);
+    if (changed && !shareActive.current) saveOverrides(overrides.current);
   };
 
   function selectLocation(loc: LocationData, remember = true) {
@@ -204,8 +239,8 @@ export function App() {
         changed = true;
       }
     }
-    if (changed) saveOverrides(overrides.current);
-    if (remember) {
+    if (changed && !shareActive.current) saveOverrides(overrides.current);
+    if (remember && !shareActive.current) {
       try {
         localStorage.setItem(METRO_KEY, loc.id);
       } catch {
@@ -228,6 +263,20 @@ export function App() {
   // Reset = back to your locale's defaults: drop manual edits and return to the
   // auto-detected home metro (re-detecting if we don't have it remembered yet).
   function reset() {
+    // Leaving a shared view: resume normal persistence and drop the ?s= token so a
+    // reload doesn't snap back to it.
+    if (shareActive.current) {
+      shareActive.current = false;
+      try {
+        const u = new URL(window.location.href);
+        if (u.searchParams.has("s")) {
+          u.searchParams.delete("s");
+          window.history.replaceState(null, "", u.pathname + u.search + u.hash);
+        }
+      } catch {
+        /* ignore */
+      }
+    }
     overrides.current = {};
     saveOverrides({});
     let homeId: string | null = null;
@@ -257,6 +306,25 @@ export function App() {
     });
   }
 
+  // Copy a link that reproduces this exact view: the metro plus only the fields the
+  // user changed from that metro's defaults (so the link stays short and re-derives
+  // everything else from live data on open).
+  function share() {
+    try {
+      const defaults = buildInputs(selected, market, propertyTax, insurance);
+      const o: Record<string, unknown> = {};
+      for (const k of Object.keys(inputs) as (keyof CalcInputs)[]) {
+        if (inputs[k] !== defaults[k]) o[k] = inputs[k];
+      }
+      const url = `${window.location.origin}${window.location.pathname}?s=${encodeShare({ m: selected.id, o })}`;
+      void navigator.clipboard?.writeText(url);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard unavailable */
+    }
+  }
+
   // Pull the freshest committed market data from the CDN once on load. If the user
   // hasn't touched anything yet, re-seed inputs from it so the headline calc uses
   // the fresher rates too; otherwise just update the live badges and "as of" date.
@@ -281,6 +349,7 @@ export function App() {
   useEffect(() => {
     if (detected.current) return;
     detected.current = true;
+    if (SHARE) return; // a shared link dictates the location; don't re-detect
     let stored = false;
     try {
       stored = !!localStorage.getItem(METRO_KEY);
@@ -318,26 +387,50 @@ export function App() {
           <section className="rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-6 lg:sticky lg:top-6 lg:self-start">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-sm font-bold uppercase tracking-wide text-muted">Your situation</h2>
-              <button
-                type="button"
-                onClick={reset}
-                title="Reset to your location's defaults"
-                className="inline-flex items-center gap-1 text-xs font-medium text-muted transition-colors hover:text-ink"
-              >
-                <svg
-                  className="h-3.5 w-3.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={share}
+                  title="Copy a link to this exact scenario"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-muted transition-colors hover:text-ink"
                 >
-                  <path d="M3 12a9 9 0 1 0 2.6-6.4L3 8" />
-                  <path d="M3 3v5h5" />
-                </svg>
-                Reset
-              </button>
+                  <svg
+                    className="h-3.5 w-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                    <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" />
+                  </svg>
+                  {copied ? "Copied!" : "Share"}
+                </button>
+                <button
+                  type="button"
+                  onClick={reset}
+                  title="Reset to your location's defaults"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-muted transition-colors hover:text-ink"
+                >
+                  <svg
+                    className="h-3.5 w-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M3 12a9 9 0 1 0 2.6-6.4L3 8" />
+                    <path d="M3 3v5h5" />
+                  </svg>
+                  Reset
+                </button>
+              </div>
             </div>
             <Controls
               inputs={inputs}
