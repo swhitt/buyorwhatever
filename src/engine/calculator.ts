@@ -104,6 +104,7 @@ export interface RecurringCost {
   label: string;
   side: "buy" | "rent";
   deductibleSALT?: boolean; // counts toward the SALT itemized base (capped)
+  inHousingPayment?: boolean; // part of the all-in monthly housing payment (excludes maintenance)
   monthly: (inp: CalcInputs, ctx: CostContext) => number;
 }
 
@@ -113,6 +114,7 @@ export const RECURRING_COSTS: RecurringCost[] = [
     label: "Property tax",
     side: "buy",
     deductibleSALT: true,
+    inHousingPayment: true,
     monthly: (i, c) => monthlyCostFromBasis(i.propertyTax, c.homeValue, c.inflationFactor),
   },
   {
@@ -125,6 +127,7 @@ export const RECURRING_COSTS: RecurringCost[] = [
     key: "insurance",
     label: "Insurance",
     side: "buy",
+    inHousingPayment: true,
     monthly: (i, c) => monthlyCostFromBasis(i.homeInsurance, c.homeValue, c.inflationFactor),
   },
   {
@@ -132,6 +135,7 @@ export const RECURRING_COSTS: RecurringCost[] = [
     key: "hoa",
     label: "HOA / other",
     side: "buy",
+    inHousingPayment: true,
     monthly: (i, c) => (i.hoaMonthly + i.extraUtilitiesMonthly) * c.inflationFactor,
   },
   {
@@ -139,6 +143,7 @@ export const RECURRING_COSTS: RecurringCost[] = [
     key: "pmi",
     label: "PMI",
     side: "buy",
+    inHousingPayment: true,
     monthly: (i, c) => (c.loanBalance / c.homePrice > 0.8 ? (c.originalLoan * i.pmiRate) / 12 : 0),
   },
 ];
@@ -149,6 +154,23 @@ const BUY_COSTS = RECURRING_COSTS.filter((c) => c.side === "buy");
 function zeroCosts(): Record<CostKey, number> {
   return Object.fromEntries(RECURRING_COSTS.map((c) => [c.key, 0])) as Record<CostKey, number>;
 }
+
+// Year-row aggregations live next to the row so every view derives the same number
+// from one place instead of re-spelling the sum (and silently dropping a new cost).
+
+/** Total recurring carrying costs for the year (every registry bucket). */
+export const sumCosts = (y: YearRow): number => Object.values(y.costs).reduce((s, n) => s + n, 0);
+
+/** Gross annual cash cost of owning: mortgage plus all carrying costs, before tax. */
+export const grossOwningCost = (y: YearRow): number => y.mortgagePaid + sumCosts(y);
+
+/** Net annual cash cost of owning: gross less the federal tax benefit. */
+export const netOwningCost = (y: YearRow): number => grossOwningCost(y) - y.taxBenefit;
+
+/** The carrying costs that make up the all-in monthly housing payment (property tax,
+ *  insurance, HOA, PMI; NOT maintenance), as {label, monthly} pairs for the year. */
+export const housingPaymentLines = (y: YearRow): { label: string; monthly: number }[] =>
+  BUY_COSTS.filter((c) => c.inHousingPayment).map((c) => ({ label: c.label, monthly: y.costs[c.key] / 12 }));
 
 export interface YearRow {
   year: number;

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
-import { calculate, type CalcInputs, type CalcResult, type CostBasis } from "./engine/calculator";
+import { calculate, housingPaymentLines, type CalcInputs, type CalcResult, type CostBasis } from "./engine/calculator";
 import { buildInputs, type AppInputs } from "./engine/defaults";
 import { estimateMarginalRate, estimateStateIncomeTax } from "./engine/taxRates";
 import { Controls } from "./components/Controls";
@@ -738,24 +738,17 @@ function MonthlyPayment({ result }: { result: ReturnType<typeof calculate> }) {
   const y1 = result.years[0];
   if (!y1) return null;
   const pni = result.monthlyPayment;
-  const propertyTax = y1.costs.propertyTax / 12;
-  const insurance = y1.costs.insurance / 12;
-  const hoa = y1.costs.hoa / 12;
-  const pmi = y1.costs.pmi / 12;
   const taxBenefit = y1.taxBenefit / 12;
-  const gross = pni + propertyTax + insurance + hoa + pmi;
+  // Escrow-style carrying costs straight from the registry, so a new one flows into
+  // the headline automatically (maintenance is excluded by not being flagged).
+  const lines = housingPaymentLines(y1).filter((l) => l.monthly > 0);
+  const gross = pni + lines.reduce((s, l) => s + l.monthly, 0);
   const net = gross - taxBenefit;
   const rows: { label: string; value: number; credit?: boolean }[] = [
     { label: "Principal & interest", value: pni },
-    { label: "Property tax", value: propertyTax },
-    { label: "Home insurance", value: insurance },
-    ...(hoa > 0 ? [{ label: "HOA / other", value: hoa }] : []),
-    ...(pmi > 0 ? [{ label: "PMI", value: pmi }] : []),
+    ...lines.map((l) => ({ label: l.label, value: l.monthly })),
     ...(taxBenefit > 0 ? [{ label: "Tax benefit", value: taxBenefit, credit: true }] : []),
   ];
-  // Name exactly what's in the number so "net effective" isn't a mystery.
-  const parts = ["principal & interest", "property tax", "insurance", ...(hoa > 0 ? ["HOA"] : []), ...(pmi > 0 ? ["PMI"] : [])];
-  const included = parts.slice(0, -1).join(", ") + ", and " + parts[parts.length - 1];
 
   return (
     <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-6">
@@ -767,7 +760,8 @@ function MonthlyPayment({ result }: { result: ReturnType<typeof calculate> }) {
         </div>
       </div>
       <p className="mt-1 text-sm text-muted">
-        Your all-in monthly housing payment ({included}) in year 1,
+        Your all-in monthly housing payment (principal &amp; interest, property tax, insurance, plus any HOA and PMI) in
+        year 1,
         {taxBenefit > 0 ? (
           <>
             {" "}

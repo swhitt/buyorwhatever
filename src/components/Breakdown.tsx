@@ -1,12 +1,6 @@
 import { Fragment, useState } from "react";
-import { RECURRING_COSTS, type YearRow } from "../engine/calculator";
+import { netOwningCost, RECURRING_COSTS, type YearRow } from "../engine/calculator";
 import { usd } from "../lib/format";
-
-const sumCosts = (y: YearRow) => Object.values(y.costs).reduce((s, n) => s + n, 0);
-
-// Net annual cash cost of owning: the year's carrying costs and mortgage, less the
-// federal tax benefit. It's the headline each row collapses to; expand for the lines.
-const owningCost = (y: YearRow) => y.mortgagePaid + sumCosts(y) - y.taxBenefit;
 
 function Chevron({ open }: { open: boolean }) {
   return (
@@ -97,7 +91,7 @@ export function Breakdown({ years }: { years: YearRow[] }) {
                   className="group cursor-pointer border-b border-line/60 last:border-0 hover:bg-paper"
                 >
                   <td className="py-2 pr-3 text-left font-semibold">{y.year}</td>
-                  <td className="px-3 py-2 text-ink">{usd(owningCost(y))}</td>
+                  <td className="px-3 py-2 text-ink">{usd(netOwningCost(y))}</td>
                   <td className="px-3 py-2 text-muted">{usd(y.rentPaid)}</td>
                   <td className="px-3 py-2 text-rent-text">{usd(y.equity)}</td>
                   <td className="pr-1 text-right">

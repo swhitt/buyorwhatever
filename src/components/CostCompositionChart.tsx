@@ -1,5 +1,5 @@
 import { Bar, BarChart, CartesianGrid, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { RECURRING_COSTS, type CostKey, type YearRow } from "../engine/calculator";
+import { grossOwningCost, RECURRING_COSTS, type CostKey, type YearRow } from "../engine/calculator";
 import { usd, usdCompact } from "../lib/format";
 import { niceTicks } from "../lib/ticks";
 
@@ -56,7 +56,7 @@ function CompositionTooltip({
 }) {
   if (!active || !payload?.length) return null;
   const y = payload[0].payload.raw;
-  const cashOut = y.mortgagePaid + Object.values(y.costs).reduce((s, n) => s + n, 0);
+  const cashOut = grossOwningCost(y);
   const netCash = cashOut - y.taxBenefit;
   return (
     <div className="rounded-xl border border-line bg-surface px-3 py-2 text-[13px] shadow-lg">
