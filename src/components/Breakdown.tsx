@@ -20,13 +20,17 @@ export function Breakdown({ years }: { years: YearRow[] }) {
     { key: "equity", label: "Your equity", tone: "good" },
   ];
 
+  // Drop the PMI column when there's no PMI in any year (20%+ down, or it already
+  // dropped off), so it isn't a column of zeros taking up room.
+  const visibleCols = years.some((y) => y.pmi > 0) ? cols : cols.filter((c) => c.key !== "pmi");
+
   return (
     <div className="overflow-x-auto">
       <table className="tnum w-full min-w-[880px] border-collapse text-right text-sm">
         <thead>
           <tr className="border-b border-line text-xs uppercase tracking-wide text-muted">
             <th className="sticky left-0 z-10 bg-surface py-2 pr-3 text-left font-semibold">Year</th>
-            {cols.map((c) => (
+            {visibleCols.map((c) => (
               <th
                 key={c.key}
                 title={c.hint}
@@ -43,7 +47,7 @@ export function Breakdown({ years }: { years: YearRow[] }) {
               <td className="sticky left-0 z-10 bg-surface py-2 pr-3 text-left font-semibold group-hover:bg-paper">
                 {y.year}
               </td>
-              {cols.map((c) => {
+              {visibleCols.map((c) => {
                 const v = y[c.key] as number;
                 const cls =
                   c.tone === "good" ? "text-rent-text" : c.tone === "rent" ? "text-muted" : "text-ink";
