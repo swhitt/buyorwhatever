@@ -1,18 +1,20 @@
 name: Refresh data
 
-# Manual, on-demand refresh of the live market data without a full rebuild. Pulls
-# fresh figures, commits them, and purges the jsDelivr cache so the deployed site
-# (which fetches market.json from that CDN at runtime) reflects them promptly. The
-# weekly auto-refresh still rides the Deploy workflow's cron.
+# Refresh the live market data: pull fresh figures, commit them, and purge the
+# jsDelivr cache so the deployed site (which fetches market.json from that CDN at
+# runtime) reflects them promptly. Runs weekly and on demand.
 on:
   workflow_dispatch:
+  schedule:
+    # Freddie Mac PMMS posts Thursdays, so run Friday.
+    - cron: "0 12 * * 5"
 
 permissions:
   contents: read
 
 concurrency:
-  # Share the deploy workflow's group so a data push here never races a deploy push.
-  group: pages
+  # Serialize refresh runs so a manual dispatch never races the weekly cron's push.
+  group: data-refresh
   cancel-in-progress: false
 
 jobs:
