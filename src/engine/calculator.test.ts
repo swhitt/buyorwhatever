@@ -10,7 +10,9 @@ const base: CalcInputs = {
   yearsToStay: 9,
   investmentReturn: 0.05,
   inflation: 0.024,
+  propertyTaxMode: "pct",
   propertyTaxRate: 0.011,
+  propertyTaxAnnual: 4400,
   maintenanceMode: "pct",
   maintenanceRate: 0.01,
   maintenanceAnnual: 4000,
@@ -107,6 +109,14 @@ describe("calculate", () => {
     expect(asAmt.breakevenRent).toBeCloseTo(asPct.breakevenRent, 4);
   });
 
+  it("dollar-mode property tax equals percent-mode when value is flat", () => {
+    // $4,400/yr and 1.1%-of-$400k are the same stream with no appreciation/inflation.
+    const flat = { ...base, homeAppreciation: 0, inflation: 0 };
+    const asPct = calculate({ ...flat, propertyTaxMode: "pct" as const, propertyTaxRate: 0.011 });
+    const asAmt = calculate({ ...flat, propertyTaxMode: "amount" as const, propertyTaxAnnual: 4400 });
+    expect(asAmt.breakevenRent).toBeCloseTo(asPct.breakevenRent, 4);
+  });
+
   it("a bigger flat insurance figure raises the cost of buying (higher breakeven rent)", () => {
     const cheap = calculate({ ...base, homeInsuranceMode: "amount", homeInsuranceAnnual: 1000 });
     const pricey = calculate({ ...base, homeInsuranceMode: "amount", homeInsuranceAnnual: 6000 });
@@ -140,5 +150,26 @@ describe("calculate", () => {
     // Deductible fraction at $1.6M is 750/1600 ≈ 0.47, so far less interest is
     // creditable per dollar than the under-cap loan's full deduction.
     expect(overCap.years[0].interestPaid).toBeGreaterThan(underCap.years[0].interestPaid);
+  });
+
+  it("raises the deductible-interest fraction as a jumbo loan amortizes under the cap", () => {
+    // $2M home, 20% down => $1.6M loan: year 1 only ~$750k/$1.6M of interest is
+    // deductible, but as the balance falls under $750k the fraction climbs to 1.
+    // Strip SALT and the standard deduction so taxBenefit is purely marginal rate
+    // times deductible interest, making the rising fraction observable per dollar.
+    const j = calculate({
+      ...base,
+      homePrice: 2_000_000,
+      propertyTaxRate: 0,
+      otherSALT: 0,
+      standardDeduction: 0,
+      capitalGainsRate: 0,
+      yearsToStay: 30,
+    });
+    const early = j.years[0].taxBenefit / j.years[0].interestPaid;
+    const late = j.years[27].taxBenefit / j.years[27].interestPaid;
+    // Once the balance is under $750k the whole interest deducts, so the benefit
+    // per dollar of interest is higher late than early (frozen-at-origination wouldn't move).
+    expect(late).toBeGreaterThan(early);
   });
 });

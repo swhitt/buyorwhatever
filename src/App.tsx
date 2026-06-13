@@ -4,6 +4,7 @@ import { buildInputs } from "./engine/defaults";
 import { estimateMarginalRate, estimateStateIncomeTax } from "./engine/taxRates";
 import { Controls } from "./components/Controls";
 import { Breakdown } from "./components/Breakdown";
+import { Derivation } from "./components/Derivation";
 import { Disclosure } from "./ui";
 import { monthsAndYears, pct, usd } from "./lib/format";
 import { ThemeToggle } from "./theme";
@@ -40,7 +41,9 @@ const PERSIST_SPEC = {
   homePrice: "number",
   monthlyRent: "number",
   downPaymentPct: "number",
+  propertyTaxMode: "mode",
   propertyTaxRate: "number",
+  propertyTaxAnnual: "number",
   maintenanceMode: "mode",
   maintenanceRate: "number",
   maintenanceAnnual: "number",
@@ -58,14 +61,13 @@ const PERSIST_SPEC = {
 const PERSIST_KEYS = Object.keys(PERSIST_SPEC) as (keyof typeof PERSIST_SPEC)[];
 // Of those, the ones tied to a specific place: cleared when you pick a new metro
 // (the override was for the old location), so they revert to that metro's default.
-// The rest are personal and always stick.
+// The flat-dollar `*Annual` figures are deliberately NOT here: a number the user
+// typed in $ mode is personal and survives a location switch (see selectLocation).
 const LOCATION_FIELDS: (keyof CalcInputs)[] = [
   "homePrice",
   "monthlyRent",
   "propertyTaxRate",
   "homeInsuranceRate",
-  "homeInsuranceAnnual",
-  "maintenanceAnnual",
   "taxState",
 ];
 
@@ -176,16 +178,21 @@ export function App() {
     // recorded as manual overrides.
     setInputs((prev) => {
       const insRate = insurance[loc.state] ?? prev.homeInsuranceRate;
+      const taxRate = propertyTax[loc.state] ?? prev.propertyTaxRate;
       return {
         ...prev,
         homePrice: loc.homeValue,
         monthlyRent: loc.rent,
-        propertyTaxRate: propertyTax[loc.state] ?? prev.propertyTaxRate,
+        propertyTaxRate: taxRate,
         homeInsuranceRate: insRate,
-        // Re-seed the flat-dollar figures off the new home value so a %/$ toggle
-        // reflects the place you just picked, and point the tax estimator at it.
-        homeInsuranceAnnual: Math.round(loc.homeValue * insRate),
-        maintenanceAnnual: Math.round(loc.homeValue * prev.maintenanceRate),
+        // Re-seed each flat-dollar figure off the new home value ONLY where that field
+        // is in percent mode (the dollars are just a seed there). In amount mode the
+        // number is one the user typed, so it's left alone. Point the estimator here too.
+        propertyTaxAnnual: prev.propertyTaxMode === "amount" ? prev.propertyTaxAnnual : Math.round(loc.homeValue * taxRate),
+        homeInsuranceAnnual:
+          prev.homeInsuranceMode === "amount" ? prev.homeInsuranceAnnual : Math.round(loc.homeValue * insRate),
+        maintenanceAnnual:
+          prev.maintenanceMode === "amount" ? prev.maintenanceAnnual : Math.round(loc.homeValue * prev.maintenanceRate),
         taxState: loc.state,
       };
     });
@@ -365,8 +372,11 @@ export function App() {
           </section>
         </div>
 
-        {/* Full-width so the wide year-by-year table has room to breathe. */}
-        <div className="mt-6">
+        {/* Full-width so the wide tables have room to breathe. */}
+        <div className="mt-6 space-y-3">
+          <Disclosure summary="Show how your rates are derived">
+            <Derivation inputs={inputs} result={result} market={market} selected={selected} />
+          </Disclosure>
           <Disclosure summary="Show the year-by-year math">
             <Breakdown years={result.years} />
           </Disclosure>

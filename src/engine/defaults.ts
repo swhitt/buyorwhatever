@@ -27,10 +27,14 @@ export function buildInputs(
     homeAppreciation: 0.035,
 
     yearsToStay: 9,
-    investmentReturn: 0.05,
+    // Long-run nominal for a balanced/equity portfolio (the opportunity cost of the
+    // down payment). The single most important assumption; higher favors renting.
+    investmentReturn: 0.06,
     inflation: clamp(market.inflation.rate, 0.01, 0.06),
 
+    propertyTaxMode: "pct",
     propertyTaxRate: propertyTax[loc.state] ?? 0.011,
+    propertyTaxAnnual: Math.round(loc.homeValue * (propertyTax[loc.state] ?? 0.011)),
     maintenanceMode: "pct",
     maintenanceRate: 0.01,
     // Dollar defaults track the percent defaults at today's value, so toggling
@@ -52,9 +56,9 @@ export function buildInputs(
     saltCap: SALT_CAP,
     filingJointly,
     capitalGainsRate: 0.15,
-    // Tax-rate estimator starts off (manual 24% above) until the user enters an
-    // income; the state is pre-seeded from the location so it's one less field.
-    taxAuto: false,
+    // Tax-rate estimator is on by default (it's the headline feature) but falls back
+    // to the manual 24% until an income is entered; state is pre-seeded from location.
+    taxAuto: true,
     annualIncome: 0,
     taxState: loc.state,
     localTaxRate: 0,

@@ -74,7 +74,9 @@ function CostRow({
 }) {
   const header = (
     <span className="flex items-center gap-2">
-      {mode === "pct" && badge}
+      {/* Keep the live benchmark badge in both modes; it's the reference you check a
+          typed dollar figure against. */}
+      {badge}
       <Segmented
         value={mode}
         onChange={(v) => onModeChange(v as "pct" | "amount")}
@@ -87,9 +89,9 @@ function CostRow({
   );
   const hint =
     mode === "pct"
-      ? `${usd(homePrice * rate)}/yr at today's value`
+      ? `${usd(homePrice * rate)}/yr now, rising with the home's value`
       : homePrice > 0
-        ? `${pct(annual / homePrice, 2)} of home value`
+        ? `${pct(annual / homePrice, 2)} of today's value, rising with inflation`
         : undefined;
   return (
     <Field label={label} badge={header} hint={hint}>
@@ -118,12 +120,14 @@ function StateSelect({ value, onChange }: { value: string; onChange: (s: string)
       onChange={(e) => onChange(e.target.value)}
       className="w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-[15px] font-medium outline-none focus:border-ink focus:ring-2 focus:ring-ink/10"
     >
-      <option value="US">No state income tax</option>
-      {STATE_OPTIONS.map((s) => (
-        <option key={s.code} value={s.code}>
-          {s.name}
-        </option>
-      ))}
+      <option value="US">National (no state tax)</option>
+      <optgroup label="State">
+        {STATE_OPTIONS.map((s) => (
+          <option key={s.code} value={s.code}>
+            {s.name}
+          </option>
+        ))}
+      </optgroup>
     </select>
   );
 }
@@ -237,6 +241,17 @@ export function Controls({
 
   // Carry the current cost across a %/$ toggle so the dollar figure shown doesn't
   // jump: pct->amount seeds the dollars from the rate, amount->pct does the reverse.
+  const setPropertyTaxMode = (mode: "pct" | "amount") => {
+    if (mode === inputs.propertyTaxMode) return;
+    patch(
+      mode === "amount"
+        ? { propertyTaxMode: mode, propertyTaxAnnual: Math.round(inputs.homePrice * inputs.propertyTaxRate) }
+        : {
+            propertyTaxMode: mode,
+            propertyTaxRate: inputs.homePrice > 0 ? inputs.propertyTaxAnnual / inputs.homePrice : inputs.propertyTaxRate,
+          },
+    );
+  };
   const setMaintenanceMode = (mode: "pct" | "amount") => {
     if (mode === inputs.maintenanceMode) return;
     patch(
@@ -373,7 +388,7 @@ export function Controls({
             step={0.0025}
             onChange={(n) => patch({ investmentReturn: n })}
             format={(n) => pct(n, 1)}
-            hint="What your down payment would earn if invested instead. The single most important assumption."
+            hint="What your down payment would earn if invested instead, the single most important assumption. The default is a long-run nominal; a higher figure favors renting."
           />
           <SliderRow
             label="Rent growth"
@@ -394,14 +409,19 @@ export function Controls({
             format={(n) => pct(n, 1)}
             badge={<LiveBadge>BLS CPI {pct(market.inflation.rate, 1)}</LiveBadge>}
           />
-          <SliderRow
-            label="Property tax rate"
-            value={inputs.propertyTaxRate}
-            min={0}
-            max={0.03}
-            step={0.0005}
-            onChange={(n) => patch({ propertyTaxRate: n })}
-            format={(n) => pct(n, 2)}
+          <CostRow
+            label="Property tax"
+            mode={inputs.propertyTaxMode}
+            onModeChange={setPropertyTaxMode}
+            rate={inputs.propertyTaxRate}
+            rateMax={0.03}
+            rateStep={0.0005}
+            rateDigits={2}
+            onRateChange={(n) => patch({ propertyTaxRate: n })}
+            annual={inputs.propertyTaxAnnual}
+            annualStep={250}
+            onAnnualChange={(n) => patch({ propertyTaxAnnual: n })}
+            homePrice={inputs.homePrice}
             badge={<LiveBadge>{selected.state} avg</LiveBadge>}
           />
           <CostRow

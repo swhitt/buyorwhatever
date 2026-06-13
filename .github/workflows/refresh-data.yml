@@ -11,7 +11,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: refresh-data
+  # Share the deploy workflow's group so a data push here never races a deploy push.
+  group: pages
   cancel-in-progress: false
 
 jobs:
@@ -37,17 +38,27 @@ jobs:
         run: npm run fetch-data
 
       - name: Commit refreshed data
+        # Resilient push: if another run lands first, rebase and retry instead of
+        # hard-failing, and never block the cache purge below.
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src/data/market.json src/data/history.json src/data/locations.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
-          else
-            git commit -m "Refresh market data (manual)"
-            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            exit 0
           fi
+          git commit -m "Refresh market data (manual)"
+          for attempt in 1 2 3; do
+            if git pull --rebase --autostash origin "${GITHUB_REF_NAME}" \
+                && git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
+            echo "push attempt ${attempt} failed, retrying..."
+            sleep 5
+          done
+          echo "could not push after 3 attempts"
 
       - name: Purge jsDelivr cache
         # Best-effort: let the CDN serve the new market.json (the only file fetched

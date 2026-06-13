@@ -8,7 +8,7 @@ Enter a location (or your own numbers) and it computes the **breakeven monthly r
 
 Every cost of owning (mortgage interest and principal, property tax, maintenance, insurance, PMI, HOA, closing and selling costs, and the investment return you give up by tying money in a down payment) is converted into rent-equivalent dollars and discounted at your investment-return rate.
 
-Don't know your tax bracket? Enter your income, filing status, and state and it estimates your marginal rate (federal + state, plus an optional local field), so the mortgage-interest and property-tax (SALT) deductions are valued realistically instead of guessed. Maintenance and insurance can each be entered as a percent of home value or a flat dollar figure, whichever you know.
+Don't know your tax bracket? Enter your income, filing status, and state and it estimates your marginal rate (federal + state, plus an optional local field). The mortgage-interest and property-tax deduction is valued at your **federal** marginal rate (it's a federal Schedule A deduction), and your estimated state and local income tax feeds the SALT base, so the deduction math reflects your situation instead of a guess. Property tax, maintenance, and insurance can each be entered as a percent of home value or a flat dollar figure, whichever you know. A **"show how your rates are derived"** panel exposes the exact federal and state brackets applied (your row highlighted), whether you itemize, and the live source behind every headline number.
 
 ## The model
 

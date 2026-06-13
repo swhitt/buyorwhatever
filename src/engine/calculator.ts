@@ -34,11 +34,14 @@ export interface CalcInputs {
   inflation: number; // annual, e.g. 0.024
 
   // Recurring ownership costs.
-  // Maintenance and insurance can be entered two ways (per `*Mode`):
+  // Property tax, maintenance, and insurance can each be entered two ways (`*Mode`):
   //   "pct"    - a fraction of the *current* (appreciating) home value / yr.
-  //   "amount" - a flat dollar figure / yr in today's dollars, grown with inflation.
+  //   "amount" - a flat dollar figure / yr in today's dollars, grown with inflation
+  //              (useful where assessment caps decouple the bill from market value).
   // The engine reads `*Rate` in pct mode and `*Annual` in amount mode.
+  propertyTaxMode: "pct" | "amount";
   propertyTaxRate: number; // of current home value / yr, e.g. 0.011
+  propertyTaxAnnual: number; // $/yr in today's dollars, e.g. 4000
   maintenanceMode: "pct" | "amount";
   maintenanceRate: number; // of current home value / yr, e.g. 0.01
   maintenanceAnnual: number; // $/yr in today's dollars, e.g. 4000
@@ -152,12 +155,6 @@ function simulateBuy(inp: CalcInputs, horizonYears: number, collectRows: boolean
   const downPayment = inp.homePrice * inp.downPaymentPct;
   const closing = inp.homePrice * inp.buyingClosingPct;
 
-  // IRC 163(h)(3): mortgage interest is deductible only on the first $750k of
-  // acquisition debt (same cap for single/HoH/MFJ; MFS's $375k isn't modeled).
-  // Scale deductible interest by that fraction (1 at or under the cap, so most
-  // metros are unaffected).
-  const deductibleIntFrac = loan > 0 ? Math.min(1, MORTGAGE_INTEREST_DEBT_CAP / loan) : 1;
-
   // Initial outlay happens at t=0, no discount.
   let pv = downPayment + closing;
 
@@ -165,7 +162,10 @@ function simulateBuy(inp: CalcInputs, horizonYears: number, collectRows: boolean
   const rows: YearRow[] = [];
 
   // Annual accumulators for the tax-benefit calc and the breakdown table.
+  // yrDeductibleInterest is interest scaled month-by-month by the IRC 163(h)(3)
+  // acquisition-debt cap (see the loop), separate from yrInterest (cash paid).
   let yrInterest = 0,
+    yrDeductibleInterest = 0,
     yrPrincipal = 0,
     yrMortgage = 0,
     yrPropTax = 0,
@@ -188,13 +188,21 @@ function simulateBuy(inp: CalcInputs, horizonYears: number, collectRows: boolean
       interest = balance * mRate;
       principal = Math.min(payment - interest, balance);
       pay = interest + principal;
+      // IRC 163(h)(3): interest is deductible only on the first $750k of
+      // acquisition debt (same cap for single/HoH/MFJ; MFS's $375k isn't modeled).
+      // Acquisition debt falls as you amortize, so the deductible fraction is
+      // recomputed off the current balance and rises to 1 once it's under the cap.
+      yrDeductibleInterest += interest * Math.min(1, MORTGAGE_INTEREST_DEBT_CAP / balance);
       balance -= principal;
     }
 
     // Recurring carrying costs. Percent-of-value items ride the appreciating home
     // value; flat-dollar items (and HOA/utilities) ride inflation instead.
     const infl = Math.pow(1 + inp.inflation, yearFrac);
-    const propTax = (homeValue * inp.propertyTaxRate) / 12;
+    const propTax =
+      inp.propertyTaxMode === "amount"
+        ? (inp.propertyTaxAnnual * infl) / 12
+        : (homeValue * inp.propertyTaxRate) / 12;
     const maint =
       inp.maintenanceMode === "amount"
         ? (inp.maintenanceAnnual * infl) / 12
@@ -228,7 +236,7 @@ function simulateBuy(inp: CalcInputs, horizonYears: number, collectRows: boolean
       // mortgage-insurance-premium deduction for 2026+, but it phases out between
       // $100k-$110k AGI and the model has no AGI input (the default 24% marginal
       // rate already implies AGI past the phaseout), so we treat PMI as a pure cost.
-      const itemized = yrInterest * deductibleIntFrac + saltUsed;
+      const itemized = yrDeductibleInterest + saltUsed;
       const benefit = inp.marginalTaxRate * Math.max(0, itemized - inp.standardDeduction);
       // credit at end-of-year discount point (use current month's df)
       pv -= benefit / df;
@@ -253,7 +261,7 @@ function simulateBuy(inp: CalcInputs, horizonYears: number, collectRows: boolean
           rentPaid: 0, // placeholder, filled by calculate()
         });
       }
-      yrInterest = yrPrincipal = yrMortgage = yrPropTax = yrMaint = yrIns = yrHoa = yrPmi = 0;
+      yrInterest = yrDeductibleInterest = yrPrincipal = yrMortgage = yrPropTax = yrMaint = yrIns = yrHoa = yrPmi = 0;
     }
   }
 
