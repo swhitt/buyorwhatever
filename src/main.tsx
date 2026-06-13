@@ -8,14 +8,15 @@ import { ErrorBoundary } from "./ErrorBoundary";
 const App = lazy(() => import("./App").then((m) => ({ default: m.App })));
 const SimpleCalc = lazy(() => import("./SimpleCalc").then((m) => ({ default: m.SimpleCalc })));
 
-const isCalc = window.location.pathname.replace(/\/+$/, "").endsWith("/calc");
-const Route = isCalc ? SimpleCalc : App;
+const path = window.location.pathname.replace(/\/+$/, "");
+const isCalc = path.endsWith("/calc");
+const metroSlug = path.replace(/^\//, ""); // "" at root, e.g. "houston-tx" for /houston-tx
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary>
       <Suspense fallback={<div className="min-h-screen bg-paper" />}>
-        <Route />
+        {isCalc ? <SimpleCalc /> : <App initialMetroSlug={metroSlug || undefined} />}
       </Suspense>
     </ErrorBoundary>
   </StrictMode>,

@@ -102,8 +102,12 @@ function readShareLink(): { loc: LocationData; overrides: Partial<AppInputs> } |
 // Decoded once at module load (before first render) so the initial state can use it.
 const SHARE = typeof window !== "undefined" ? readShareLink() : null;
 
-export function App() {
-  const overrides = useRef<Partial<AppInputs>>(SHARE ? SHARE.overrides : loadOverrides());
+export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
+  // A /metro-id deep-link (e.g. /houston-tx) opens the calculator pre-set to that metro,
+  // fresh from its defaults (no stored edits). A ?s= share link still wins over it.
+  const urlMetro = initialMetroSlug ? locations.find((l) => l.id === initialMetroSlug) : undefined;
+  const startLoc = SHARE ? SHARE.loc : (urlMetro ?? storedLocation());
+  const overrides = useRef<Partial<AppInputs>>(SHARE ? SHARE.overrides : urlMetro ? {} : loadOverrides());
   // While viewing a ?s= share link, don't write to the visitor's own localStorage;
   // the link is authoritative for the page and Reset exits the shared view.
   const shareActive = useRef(SHARE != null);
@@ -112,9 +116,9 @@ export function App() {
   // True once the user edits any input; gates the one-time re-seed from live data.
   const touched = useRef(false);
   const [market, setMarket] = useState<MarketData>(() => marketRaw as MarketData);
-  const [selected, setSelected] = useState<LocationData>(() => (SHARE ? SHARE.loc : storedLocation()));
+  const [selected, setSelected] = useState<LocationData>(() => startLoc);
   const [inputs, setInputs] = useState<AppInputs>(() => ({
-    ...buildInputs(SHARE ? SHARE.loc : storedLocation(), marketRaw as MarketData, propertyTax, insurance),
+    ...buildInputs(startLoc, marketRaw as MarketData, propertyTax, insurance),
     ...overrides.current, // restore the user's remembered edits, or the shared ones
   }));
 
@@ -136,6 +140,12 @@ export function App() {
   }, [inputs]);
 
   const result = useMemo(() => calculate(inputsForCalc), [inputsForCalc]);
+
+  // A /metro deep-link gets a metro-specific tab title (the static HTML still carries
+  // the generic one for crawlers until the per-metro prerender lands).
+  useEffect(() => {
+    if (urlMetro) document.title = `Rent vs. buy in ${urlMetro.metro} | breakEven`;
+  }, [urlMetro]);
 
   // Mirror the current selection in a ref so async geo callbacks can tell whether
   // the user has moved on since they were kicked off (avoids yanking the location).
@@ -283,7 +293,7 @@ export function App() {
   useEffect(() => {
     if (detected.current) return;
     detected.current = true;
-    if (SHARE) return; // a shared link dictates the location; don't re-detect
+    if (SHARE || urlMetro) return; // a share link or /metro deep-link dictates the location
     let stored = false;
     try {
       stored = !!localStorage.getItem(METRO_KEY);
