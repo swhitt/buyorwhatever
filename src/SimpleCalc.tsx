@@ -4,17 +4,13 @@ import { buildInputs, type AppInputs } from "./engine/defaults";
 import { usd } from "./lib/format";
 import { ThemeToggle } from "./theme";
 import { Field, MoneyInput, Slider } from "./ui";
-import type { MarketData } from "./data/types";
-import { insurance, propertyTax, usHome } from "./data/rates";
-import marketRaw from "./data/market.json";
+import { insurance, market, propertyTax, usHome } from "./data/rates";
 
 // The simple mode reuses the full engine and one chart; everything else (taxes,
 // appreciation, opportunity cost) rides the same defaults the full calculator seeds.
 const AdvantageChart = lazy(() =>
   import("./components/AdvantageChart").then((m) => ({ default: m.AdvantageChart })),
 );
-
-const market = marketRaw as MarketData;
 
 export function SimpleCalc() {
   const [inputs, setInputs] = useState<AppInputs>(() => buildInputs(usHome, market, propertyTax, insurance));

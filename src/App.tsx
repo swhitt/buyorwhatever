@@ -25,9 +25,8 @@ import { ThemeToggle } from "./theme";
 import { detectMetro } from "./geo";
 import { fetchLiveMarket } from "./data/live";
 import type { LocationData, MarketData } from "./data/types";
-import { insurance, locations, propertyTax, usHome } from "./data/rates";
+import { insurance, locations, market as bundledMarket, propertyTax, usHome } from "./data/rates";
 
-import marketRaw from "./data/market.json";
 
 // Recharts (+d3) is ~half the bundle and only used below the fold, so load it
 // lazily off the critical path. The four charts share one chunk; ChartCard gates each
@@ -147,7 +146,7 @@ function readShareLink(): { loc: LocationData; overrides: Partial<AppInputs> } |
     const payload = decodeShare(token);
     if (!payload) return null;
     const loc = (payload.m ? locations.find((l) => l.id === payload.m) : null) ?? usHome;
-    const ref = buildInputs(usHome, marketRaw as MarketData, propertyTax, insurance);
+    const ref = buildInputs(usHome, bundledMarket, propertyTax, insurance);
     return { loc, overrides: overridesFromShare(payload.o ?? {}, ref) };
   } catch {
     return null;
@@ -192,10 +191,10 @@ export function App({ initialMetroSlug, initialZip }: { initialMetroSlug?: strin
   const [actionMsg, setActionMsg] = useState("");
   // True once the user edits any input; gates the one-time re-seed from live data.
   const touched = useRef(false);
-  const [market, setMarket] = useState<MarketData>(() => marketRaw as MarketData);
+  const [market, setMarket] = useState<MarketData>(() => bundledMarket);
   const [selected, setSelected] = useState<LocationData>(() => startLoc);
   const [inputs, setInputs] = useState<AppInputs>(() => ({
-    ...buildInputs(startLoc, marketRaw as MarketData, propertyTax, insurance),
+    ...buildInputs(startLoc, bundledMarket, propertyTax, insurance),
     ...overrides.current, // restore the user's remembered edits, or the shared ones
   }));
 
