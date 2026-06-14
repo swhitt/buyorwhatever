@@ -147,21 +147,15 @@ function pageFor(id: string, d: Card): string {
 
 // A per-ZIP page so /<zip> resolves to a real static file (200, like the metro pages, since
 // Vercel's cleanUrls serves them and the SPA catch-all rewrite does not fire for misses) and
-// unfurls with that ZIP's own verdict. noindex keeps these ~8k thin pages out of search; they
-// exist for routing and link sharing, not SEO. The OG card image points at the on-demand
-// /api/og endpoint (render once, then served from Blob), so we don't bake 8k PNGs at build.
-function zipOgImage(zip: string, d: Card): string {
-  const q = new URLSearchParams({ z: zip, m: d.metro, w: d.word, be: d.breakeven, hp: d.homePrice, rt: d.rent });
-  return `${SITE}/api/og?${q.toString()}`;
-}
-
+// unfurls with that ZIP's own verdict in the title/description. noindex keeps these ~8k thin
+// pages out of search; they exist for routing and link sharing, not SEO. The card image is the
+// generic one for now (per-ZIP card images are a Blob job, see the OG backlog).
 function zipPageFor(zip: string, d: Card): string {
   const sub = d.word === "Toss-up" ? "too close to call" : d.word === "Rent" ? "renting wins" : "buying wins";
   const title = `Rent vs. buy in ${d.metro} (ZIP ${zip}): ${sub}`;
   const desc = `${d.takeaway} ${d.homePrice} home, live data, the math shown.`;
   return template
     .replace("</head>", '<meta name="robots" content="noindex" />\n  </head>')
-    .replaceAll(`${SITE}/og.png`, esc(zipOgImage(zip, d)))
     .replaceAll(`"${SITE}/"`, `"${SITE}/${zip}"`)
     .replaceAll(TITLE_DEFAULT, esc(title))
     .replaceAll(DESC_DEFAULT, esc(desc));
