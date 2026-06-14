@@ -620,7 +620,7 @@ export function App({ initialMetroSlug, initialZip }: { initialMetroSlug?: strin
           </section>
 
           <section className="min-w-0 space-y-6">
-            <Verdict result={result} inputs={inputs} />
+            <Verdict result={result} inputs={inputs} driver={driver} />
 
             <MonthlyPayment result={result} inputs={inputs} />
 
@@ -884,7 +884,15 @@ function CondensedVerdict({ result, inputs }: { result: ReturnType<typeof calcul
   );
 }
 
-function Verdict({ result, inputs }: { result: ReturnType<typeof calculate>; inputs: CalcInputs }) {
+function Verdict({
+  result,
+  inputs,
+  driver,
+}: {
+  result: ReturnType<typeof calculate>;
+  inputs: CalcInputs;
+  driver: ReturnType<typeof drivingFactor>;
+}) {
   const renting = result.verdict === "rent";
   const diff = Math.abs(result.monthlyDifference);
   const closeCall = isCloseCall(result, inputs);
@@ -912,11 +920,26 @@ function Verdict({ result, inputs }: { result: ReturnType<typeof calculate>; inp
           <div className="mt-1 text-2xl font-extrabold">{verdictLabel(result, inputs)}</div>
           <p className="mt-1 text-sm text-muted">
             {closeCall
-              ? "Basically a wash, sensitive to your assumptions."
+              ? "Basically a wash, it comes down to a few assumptions."
               : renting
-                ? `Your rent is ${usd(diff)}/mo under the breakeven rent, so renting's cheaper.`
-                : `Your rent is ${usd(diff)}/mo over the breakeven rent, so buying's cheaper.`}
+                ? `Your rent is ${usd(diff)}/mo under the breakeven rent, so renting comes out ahead.`
+                : `Your rent is ${usd(diff)}/mo over the breakeven rent, so buying comes out ahead.`}
           </p>
+          {driver && (
+            <p className="mt-2 text-xs text-muted">
+              {driver.flips ? (
+                <>
+                  Hinges most on <span className="font-semibold text-ink">{driver.label.toLowerCase()}</span>, which on
+                  its own could flip the answer.
+                </>
+              ) : (
+                <>
+                  Pretty robust: even <span className="font-semibold text-ink">{driver.label.toLowerCase()}</span>, the
+                  biggest lever, doesn't flip it.
+                </>
+              )}
+            </p>
+          )}
           <p className="mt-3 border-t border-line pt-3 text-sm text-muted">
             <span className="font-semibold text-ink">{usd(buyUpfront)}</span> in cash to buy today
             {rentUpfront > 0 ? (
@@ -935,7 +958,11 @@ function Verdict({ result, inputs }: { result: ReturnType<typeof calculate>; inp
         />
       </div>
       <div className="grid grid-cols-2 border-t border-line bg-surface/60 sm:grid-cols-4">
-        <MiniStat label="P&I / mo" value={usd(result.monthlyPayment)} />
+        <MiniStat
+          label="Mortgage / mo"
+          value={usd(result.monthlyPayment)}
+          title="Principal and interest only. Property tax, insurance, HOA, and PMI are on top, see the net effective monthly payment below."
+        />
         <MiniStat label="Loan amount" value={usd(result.loanAmount)} />
         <MiniStat label={`Buy total · ${inputs.yearsToStay}yr`} value={usd(result.buyNetCost)} />
         <MiniStat label={`Rent total · ${inputs.yearsToStay}yr`} value={usd(result.rentNetCost)} />
@@ -1060,10 +1087,15 @@ function Stat({ label, value, sub }: { label: string; value: string; sub: string
   );
 }
 
-function MiniStat({ label, value }: { label: string; value: string }) {
+function MiniStat({ label, value, title }: { label: string; value: string; title?: string }) {
   return (
     <div className="px-5 py-3">
-      <div className="text-[11px] font-medium uppercase tracking-wide text-muted">{label}</div>
+      <div
+        className={"text-[11px] font-medium uppercase tracking-wide text-muted" + (title ? " cursor-help" : "")}
+        title={title}
+      >
+        {label}
+      </div>
       <div className="tnum text-sm font-bold">{value}</div>
     </div>
   );
