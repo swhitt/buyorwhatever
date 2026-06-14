@@ -3,6 +3,8 @@ import { calculate, housingPaymentLines, type CalcInputs, type CalcResult } from
 import { buildInputs, type AppInputs } from "./engine/defaults";
 import { estimateMarginalRate, estimateStateIncomeTax } from "./engine/taxRates";
 import { Controls } from "./components/Controls";
+import { type ActiveZip } from "./components/LocationPicker";
+import { type ZipData } from "./lib/zips";
 import { Breakdown } from "./components/Breakdown";
 import { Derivation } from "./components/Derivation";
 import { Disclosure } from "./ui";
@@ -51,6 +53,7 @@ const usHome = locations.find((l) => l.id === "united-states") ?? locations[0];
 const METRO_KEY = "bow:metro"; // last selected metro (detected or chosen)
 const HOME_KEY = "bow:home"; // the auto-detected locale, never overwritten by manual picks
 const OVERRIDES_KEY = "bow:overrides";
+const ZIP_KEY = "bow:zip"; // the active ZIP refinement's label (numbers ride in overrides)
 
 // Returning visitors keep their last metro (no flash, no re-detect).
 function storedLocation(): LocationData {
@@ -83,6 +86,40 @@ function saveOverrides(o: Partial<AppInputs>) {
   }
 }
 
+// The active ZIP refinement is just a display label (the home value + rent it set ride in
+// the overrides). Persisted so a reload keeps label and numbers in sync; cleared whenever
+// a metro is chosen or the page is reset.
+function storedZip(): ActiveZip | null {
+  try {
+    const raw = localStorage.getItem(ZIP_KEY);
+    if (raw) {
+      const z = JSON.parse(raw) as Partial<ActiveZip>;
+      if (
+        z &&
+        typeof z.zip === "string" &&
+        typeof z.city === "string" &&
+        typeof z.state === "string" &&
+        typeof z.homeValue === "number" &&
+        typeof z.rent === "number"
+      ) {
+        return { zip: z.zip, city: z.city, state: z.state, homeValue: z.homeValue, rent: z.rent };
+      }
+    }
+  } catch {
+    /* storage unavailable or malformed */
+  }
+  return null;
+}
+
+function saveActiveZip(z: ActiveZip | null) {
+  try {
+    if (z) localStorage.setItem(ZIP_KEY, JSON.stringify(z));
+    else localStorage.removeItem(ZIP_KEY);
+  } catch {
+    /* storage unavailable */
+  }
+}
+
 // The wordmark is "go home": a full reset back to the main page, your detected city,
 // and every input at its default. Drop remembered edits, point the stored metro at the
 // detected home (or clear it so the root re-detects), then hard-navigate to / so the
@@ -90,6 +127,7 @@ function saveOverrides(o: Partial<AppInputs>) {
 function goHome() {
   try {
     saveOverrides({});
+    saveActiveZip(null);
     const home = localStorage.getItem(HOME_KEY);
     if (home) localStorage.setItem(METRO_KEY, home);
     else localStorage.removeItem(METRO_KEY);
@@ -125,6 +163,8 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
   const urlMetro = initialMetroSlug ? locations.find((l) => l.id === initialMetroSlug) : undefined;
   const startLoc = SHARE ? SHARE.loc : (urlMetro ?? storedLocation());
   const overrides = useRef<Partial<AppInputs>>(SHARE ? SHARE.overrides : urlMetro ? {} : loadOverrides());
+  // A share link or /metro deep-link dictates the place, so a stored ZIP label can't apply.
+  const [activeZip, setActiveZip] = useState<ActiveZip | null>(() => (SHARE || urlMetro ? null : storedZip()));
   // While viewing a ?s= share link, don't write to the visitor's own localStorage;
   // the link is authoritative for the page and Reset exits the shared view.
   const shareActive = useRef(SHARE != null);
@@ -166,6 +206,10 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
   );
   const driver = drivingFactor(sensitivity);
 
+  // A ZIP refinement relabels the place to that ZIP's real city, so the headline, picker,
+  // and share text never show the old metro name over the ZIP's numbers.
+  const displayMetro = activeZip ? `${activeZip.city}, ${activeZip.state}` : selected.metro;
+
   // Announce the verdict to screen readers, debounced ~600ms so dragging a slider
   // doesn't fire a stream of interruptions: the polite region speaks once the numbers
   // settle. (Sighted users already see the live headline update.)
@@ -206,6 +250,9 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
 
   function selectLocation(loc: LocationData, remember = true) {
     setSelected(loc);
+    // Picking a metro leaves any ZIP refinement behind.
+    setActiveZip(null);
+    if (!shareActive.current) saveActiveZip(null);
     // Set location-derived fields directly (not via patch) so they aren't
     // recorded as manual overrides.
     setInputs((prev) => {
@@ -235,9 +282,21 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
     }
   }
 
+  // Choosing a ZIP rides as home-price + rent overrides (so it persists and shares like any
+  // edit) plus a label, so the picker and headline show the ZIP's real city instead of the
+  // old metro name. Property tax stays on the metro's state rate but scales with the value.
+  function selectZip(zip: string, data: ZipData) {
+    patch({ homePrice: data.homeValue, monthlyRent: data.rent });
+    const z: ActiveZip = { zip, city: data.city, state: data.state, homeValue: data.homeValue, rent: data.rent };
+    setActiveZip(z);
+    if (!shareActive.current) saveActiveZip(z);
+  }
+
   // Jump to a location with its defaults (no manual overrides applied).
   function goTo(loc: LocationData) {
     setSelected(loc);
+    setActiveZip(null);
+    saveActiveZip(null);
     setInputs(buildInputs(loc, market, propertyTax, insurance));
     try {
       localStorage.setItem(METRO_KEY, loc.id);
@@ -308,7 +367,7 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
       : result.verdict === "rent"
         ? "renting wins"
         : "buying wins";
-    const text = `Rent vs. buy in ${selected.metro}: at ${usd(inputs.monthlyRent)}/mo, ${verb}. Breakeven rent ${usd(result.breakevenRent)}/mo.`;
+    const text = `Rent vs. buy in ${displayMetro}: at ${usd(inputs.monthlyRent)}/mo, ${verb}. Breakeven rent ${usd(result.breakevenRent)}/mo.`;
 
     // On touch devices the OS share sheet beats a silent clipboard copy. On desktop we
     // keep copying the bare link, which unfurls its own card when pasted into Discord,
@@ -387,7 +446,7 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
         <div aria-live="polite" className="sr-only">
           {announce}
         </div>
-        <Hero metro={selected.metro} result={result} inputs={inputs} />
+        <Hero metro={displayMetro} result={result} inputs={inputs} />
 
         {/* On mobile the controls stack above the results, so surface a one-line
             verdict up top for immediate feedback (hidden on lg, where the full
@@ -470,7 +529,9 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
               patch={patch}
               locations={locations}
               selected={selected}
+              activeZip={activeZip}
               onSelectLocation={selectLocation}
+              onSelectZip={selectZip}
               market={market}
             />
           </section>

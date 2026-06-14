@@ -1,13 +1,13 @@
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { CostBasis } from "../engine/calculator";
 import type { AppInputs } from "../engine/defaults";
 import { STANDARD_DEDUCTION } from "../engine/taxConstants";
 import { estimateMarginalRate, STATE_OPTIONS, STATE_TAX } from "../engine/taxRates";
 import type { LocationData, MarketData } from "../data/types";
 import { pct, usd } from "../lib/format";
-import { lookupZip, type ZipData } from "../lib/zips";
+import type { ZipData } from "../lib/zips";
 import { Disclosure, Field, LiveBadge, MoneyInput, Segmented, Slider } from "../ui";
-import { LocationPicker } from "./LocationPicker";
+import { LocationPicker, type ActiveZip } from "./LocationPicker";
 
 type Patch = (p: Partial<AppInputs>) => void;
 
@@ -224,103 +224,23 @@ function TaxRateControl({ inputs, patch }: { inputs: AppInputs; patch: Patch }) 
   );
 }
 
-/**
- * Optional ZIP refinement: swap the metro-average home value and rent for this exact
- * ZIP's Zillow numbers (lazy-loaded from /zips.json, ~8k zips that have both). Property
- * tax and insurance stay on their state rate, but since both are a percent of value they
- * still scale to the new home price. A ZIP in a different state keeps the metro's tax rate
- * (an accepted v1 limitation; most people refine within their own metro). Remounts on
- * metro change via a key, so its status resets when you switch cities.
- */
-function ZipRefine({ onApply }: { onApply: (z: ZipData) => void }) {
-  const [value, setValue] = useState("");
-  const [status, setStatus] = useState<
-    | { kind: "idle" | "loading" | "error" }
-    | { kind: "applied"; zip: string; data: ZipData }
-    | { kind: "notfound"; zip: string }
-  >({ kind: "idle" });
-  const valid = /^\d{5}$/.test(value);
-
-  async function submit() {
-    if (!valid) return;
-    const zip = value;
-    setStatus({ kind: "loading" });
-    try {
-      const data = await lookupZip(zip);
-      if (data) {
-        onApply(data);
-        setStatus({ kind: "applied", zip, data });
-      } else {
-        setStatus({ kind: "notfound", zip });
-      }
-    } catch {
-      setStatus({ kind: "error" });
-    }
-  }
-
-  return (
-    <Field
-      label="Refine by ZIP"
-      hint={
-        status.kind === "applied" || status.kind === "notfound"
-          ? undefined
-          : "Optional. Pulls this ZIP's own home value and rent from Zillow instead of the metro average."
-      }
-    >
-      <div className="flex gap-2">
-        <input
-          inputMode="numeric"
-          maxLength={5}
-          placeholder="e.g. 77002"
-          value={value}
-          onChange={(e) => setValue(e.target.value.replace(/\D/g, "").slice(0, 5))}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") submit();
-          }}
-          aria-label="ZIP code"
-          className="w-32 rounded-lg border border-line bg-surface px-3 py-2.5 text-[15px] font-medium tabular-nums outline-none focus:border-ink focus:ring-2 focus:ring-ink/10"
-        />
-        <button
-          type="button"
-          onClick={submit}
-          disabled={!valid || status.kind === "loading"}
-          className="rounded-lg border border-line px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-ink disabled:opacity-40"
-        >
-          {status.kind === "loading" ? "…" : "Use"}
-        </button>
-      </div>
-      {status.kind === "applied" && (
-        <p className="mt-1.5 text-xs font-medium text-rent-text">
-          ✓ ZIP {status.zip}
-          {status.data.city ? ` · ${status.data.city}, ${status.data.state}` : ""}: using{" "}
-          {usd(status.data.homeValue)} home, {usd(status.data.rent)}/mo rent
-        </p>
-      )}
-      {status.kind === "notfound" && (
-        <p className="mt-1.5 text-xs text-muted">
-          No zip-level data for {status.zip}, showing the metro average instead.
-        </p>
-      )}
-      {status.kind === "error" && (
-        <p className="mt-1.5 text-xs text-muted">Couldn't load zip data. Check your connection and try again.</p>
-      )}
-    </Field>
-  );
-}
-
 export function Controls({
   inputs,
   patch,
   locations,
   selected,
+  activeZip,
   onSelectLocation,
+  onSelectZip,
   market,
 }: {
   inputs: AppInputs;
   patch: Patch;
   locations: LocationData[];
   selected: LocationData;
+  activeZip: ActiveZip | null;
   onSelectLocation: (loc: LocationData) => void;
+  onSelectZip: (zip: string, data: ZipData) => void;
   market: MarketData;
 }) {
   const downAmount = inputs.homePrice * inputs.downPaymentPct;
@@ -328,20 +248,21 @@ export function Controls({
 
   return (
     <div className="space-y-5">
-      <Field label="Location" hint="Sets home price, rent, and property tax from live local data.">
-        <LocationPicker locations={locations} selected={selected} onSelect={onSelectLocation} />
+      <Field label="Location" hint="Search a metro or type a ZIP for that ZIP's own home price and rent.">
+        <LocationPicker
+          locations={locations}
+          selected={selected}
+          activeZip={activeZip}
+          onSelect={onSelectLocation}
+          onSelectZip={onSelectZip}
+        />
       </Field>
 
-      <ZipRefine
-        key={selected.id}
-        onApply={(z) => patch({ homePrice: z.homeValue, monthlyRent: z.rent })}
-      />
-
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Field label="Home price" badge={<LiveBadge>Zillow {usd(selected.homeValue)}</LiveBadge>}>
+        <Field label="Home price" badge={<LiveBadge>Zillow {usd(activeZip ? activeZip.homeValue : selected.homeValue)}</LiveBadge>}>
           <MoneyInput value={inputs.homePrice} onChange={(n) => patch({ homePrice: n })} />
         </Field>
-        <Field label="Comparable rent" badge={<LiveBadge>Zillow {usd(selected.rent)}/mo</LiveBadge>}>
+        <Field label="Comparable rent" badge={<LiveBadge>Zillow {usd(activeZip ? activeZip.rent : selected.rent)}/mo</LiveBadge>}>
           <MoneyInput value={inputs.monthlyRent} onChange={(n) => patch({ monthlyRent: n })} step={50} />
         </Field>
       </div>
