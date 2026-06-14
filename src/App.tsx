@@ -594,6 +594,10 @@ function Verdict({ result, inputs }: { result: ReturnType<typeof calculate>; inp
   const renting = result.verdict === "rent";
   const diff = Math.abs(result.monthlyDifference);
   const closeCall = isCloseCall(result, inputs);
+  // Cash due at the signing table, the number every monthly comparison quietly skips:
+  // down payment + closing costs to buy, deposit + broker fee to rent.
+  const buyUpfront = inputs.homePrice * (inputs.downPaymentPct + inputs.buyingClosingPct);
+  const rentUpfront = inputs.monthlyRent * (inputs.securityDepositMonths + inputs.brokerFeeMonths);
   return (
     <div
       className={
@@ -613,6 +617,15 @@ function Verdict({ result, inputs }: { result: ReturnType<typeof calculate>; inp
               : renting
                 ? `Your rent is ${usd(diff)}/mo under the break-even rent, so renting's cheaper.`
                 : `Your rent is ${usd(diff)}/mo over the break-even rent, so buying's cheaper.`}
+          </p>
+          <p className="mt-3 border-t border-line pt-3 text-sm text-muted">
+            <span className="font-semibold text-ink">{usd(buyUpfront)}</span> in cash to buy today
+            {rentUpfront > 0 ? (
+              <>
+                , vs <span className="font-semibold text-ink">{usd(rentUpfront)}</span> to rent
+              </>
+            ) : null}
+            .
           </p>
         </div>
         <Stat label="Breakeven rent" value={`${usd(result.breakevenRent)}/mo`} sub="buying wins above this rent" />
