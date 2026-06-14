@@ -10,13 +10,18 @@ const SimpleCalc = lazy(() => import("./SimpleCalc").then((m) => ({ default: m.S
 
 const path = window.location.pathname.replace(/\/+$/, "");
 const isCalc = path.endsWith("/calc");
-const metroSlug = path.replace(/^\//, ""); // "" at root, e.g. "houston-tx" for /houston-tx
+const slug = path.replace(/^\//, ""); // "" at root, "houston-tx" for /houston-tx, "77079" for /77079
+const isZip = /^\d{5}$/.test(slug);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary>
       <Suspense fallback={<div className="min-h-screen bg-paper" />}>
-        {isCalc ? <SimpleCalc /> : <App initialMetroSlug={metroSlug || undefined} />}
+        {isCalc ? (
+          <SimpleCalc />
+        ) : (
+          <App initialMetroSlug={isZip ? undefined : slug || undefined} initialZip={isZip ? slug : undefined} />
+        )}
       </Suspense>
     </ErrorBoundary>
   </StrictMode>,

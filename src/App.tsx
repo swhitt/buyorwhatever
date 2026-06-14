@@ -4,7 +4,7 @@ import { buildInputs, type AppInputs } from "./engine/defaults";
 import { estimateMarginalRate, estimateStateIncomeTax } from "./engine/taxRates";
 import { Controls } from "./components/Controls";
 import { type ActiveZip } from "./components/LocationPicker";
-import { type ZipData } from "./lib/zips";
+import { lookupZip, type ZipData } from "./lib/zips";
 import { Breakdown } from "./components/Breakdown";
 import { Derivation } from "./components/Derivation";
 import { Disclosure } from "./ui";
@@ -157,14 +157,31 @@ function readShareLink(): { loc: LocationData; overrides: Partial<AppInputs> } |
 // Decoded once at module load (before first render) so the initial state can use it.
 const SHARE = typeof window !== "undefined" ? readShareLink() : null;
 
-export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
+// Reflect the current place in the URL (/houston-tx or /77079) so it's copyable and
+// bookmarkable, without a reload. Root for the national view. Skipped while viewing a
+// ?s= share link, whose token in the query string is the authoritative URL.
+function setPathSlug(slug: string) {
+  try {
+    if (window.location.search) return; // don't clobber a ?s= share URL
+    const target = slug ? `/${slug}` : "/";
+    if (window.location.pathname !== target) window.history.pushState(null, "", target);
+  } catch {
+    /* history unavailable */
+  }
+}
+
+export function App({ initialMetroSlug, initialZip }: { initialMetroSlug?: string; initialZip?: string } = {}) {
   // A /metro-id deep-link (e.g. /houston-tx) opens the calculator pre-set to that metro,
   // fresh from its defaults (no stored edits). A ?s= share link still wins over it.
   const urlMetro = initialMetroSlug ? locations.find((l) => l.id === initialMetroSlug) : undefined;
   const startLoc = SHARE ? SHARE.loc : (urlMetro ?? storedLocation());
-  const overrides = useRef<Partial<AppInputs>>(SHARE ? SHARE.overrides : urlMetro ? {} : loadOverrides());
-  // A share link or /metro deep-link dictates the place, so a stored ZIP label can't apply.
-  const [activeZip, setActiveZip] = useState<ActiveZip | null>(() => (SHARE || urlMetro ? null : storedZip()));
+  // A /metro or /zip deep-link starts fresh (no stored edits); a ?s= share link wins over both.
+  const overrides = useRef<Partial<AppInputs>>(SHARE ? SHARE.overrides : urlMetro || initialZip ? {} : loadOverrides());
+  // A share link or deep-link dictates the place, so a stored ZIP label can't apply. A /zip
+  // deep-link's label is set by the async lookup effect below once zips.json loads.
+  const [activeZip, setActiveZip] = useState<ActiveZip | null>(() =>
+    SHARE || urlMetro || initialZip ? null : storedZip(),
+  );
   // While viewing a ?s= share link, don't write to the visitor's own localStorage;
   // the link is authoritative for the page and Reset exits the shared view.
   const shareActive = useRef(SHARE != null);
@@ -233,6 +250,36 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
     if (urlMetro) document.title = `Rent vs. buy in ${urlMetro.metro} | breakEven`;
   }, [urlMetro]);
 
+  // A /zip deep-link can't apply synchronously (zips.json is lazy), so resolve it once on
+  // mount and apply the ZIP's numbers + label. A ?s= share link or /metro slug wins.
+  useEffect(() => {
+    if (!initialZip || SHARE || urlMetro) return;
+    let cancelled = false;
+    lookupZip(initialZip).then((data) => {
+      if (cancelled || !data) return;
+      selectZip(initialZip, data); // the URL already names this ZIP, so don't push again
+      document.title = `Rent vs. buy in ${data.city}, ${data.state} | breakEven`;
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Back/forward through metro/zip selections: re-apply whatever place the URL now names.
+  useEffect(() => {
+    function onPop() {
+      const slug = window.location.pathname.replace(/^\/+|\/+$/g, "");
+      if (/^\d{5}$/.test(slug)) {
+        lookupZip(slug).then((data) => data && selectZip(slug, data));
+      } else {
+        const loc = slug ? locations.find((l) => l.id === slug) : usHome;
+        if (loc) selectLocation(loc, true);
+      }
+    }
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
   // Mirror the current selection in a ref so async geo callbacks can tell whether
   // the user has moved on since they were kicked off (avoids yanking the location).
   const selectedRef = useRef(selected.id);
@@ -248,8 +295,9 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
     if (changed && !shareActive.current) saveOverrides(overrides.current);
   };
 
-  function selectLocation(loc: LocationData, remember = true) {
+  function selectLocation(loc: LocationData, remember = true, updateUrl = false) {
     setSelected(loc);
+    if (updateUrl) setPathSlug(loc.id === "united-states" ? "" : loc.id);
     // Picking a metro leaves any ZIP refinement behind.
     setActiveZip(null);
     if (!shareActive.current) saveActiveZip(null);
@@ -285,7 +333,7 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
   // Choosing a ZIP rides as home-price + rent overrides (so it persists and shares like any
   // edit) plus a label, so the picker and headline show the ZIP's real city instead of the
   // old metro name. Property tax stays on the metro's state rate but scales with the value.
-  function selectZip(zip: string, data: ZipData) {
+  function selectZip(zip: string, data: ZipData, updateUrl = false) {
     // Re-point the rate-based costs and the SALT state to the ZIP's state (like
     // selectLocation), so an out-of-state ZIP doesn't tax a CA home at TX rates. These ride
     // as overrides too, so they persist, share, and get pruned on a metro switch. A
@@ -299,6 +347,7 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
     const z: ActiveZip = { zip, city: data.city, state: data.state, homeValue: data.homeValue, rent: data.rent };
     setActiveZip(z);
     if (!shareActive.current) saveActiveZip(z);
+    if (updateUrl) setPathSlug(zip);
   }
 
   // Jump to a location with its defaults (no manual overrides applied).
@@ -421,7 +470,7 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
   useEffect(() => {
     if (detected.current) return;
     detected.current = true;
-    if (SHARE || urlMetro) return; // a share link or /metro deep-link dictates the location
+    if (SHARE || urlMetro || initialZip) return; // a share link or deep-link dictates the location
     let stored = false;
     try {
       stored = !!localStorage.getItem(METRO_KEY);
@@ -538,8 +587,8 @@ export function App({ initialMetroSlug }: { initialMetroSlug?: string } = {}) {
               locations={locations}
               selected={selected}
               activeZip={activeZip}
-              onSelectLocation={selectLocation}
-              onSelectZip={selectZip}
+              onSelectLocation={(loc) => selectLocation(loc, true, true)}
+              onSelectZip={(zip, data) => selectZip(zip, data, true)}
               market={market}
             />
           </section>
