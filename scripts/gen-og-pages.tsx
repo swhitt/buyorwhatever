@@ -8,11 +8,8 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { calculate } from "../src/engine/calculator";
 import { buildInputs } from "../src/engine/defaults";
 import { usd } from "../src/lib/format";
-import type { LocationData, MarketData, StateRateTable } from "../src/data/types";
-import locations from "../src/data/locations.json";
-import market from "../src/data/market.json";
-import propertyTax from "../src/data/propertyTax.json";
-import insurance from "../src/data/insurance.json";
+import type { LocationData } from "../src/data/types";
+import { insurance, locations, market, propertyTax } from "../src/data/rates";
 
 const SITE = "https://breakeven.rent";
 const INK = "#1a1a16";
@@ -54,12 +51,7 @@ interface Card {
 }
 
 function cardFor(loc: LocationData): Card {
-  const inputs = buildInputs(
-    loc,
-    market as unknown as MarketData,
-    propertyTax as unknown as StateRateTable,
-    insurance as unknown as StateRateTable,
-  );
+  const inputs = buildInputs(loc, market, propertyTax, insurance);
   const r = calculate(inputs);
   const closeCall = Math.abs(r.monthlyDifference) < inputs.monthlyRent * 0.05;
   const renting = r.verdict === "rent";
@@ -175,7 +167,7 @@ function zipPageFor(zip: string, d: Card): string {
 }
 
 let n = 0;
-for (const loc of locations as LocationData[]) {
+for (const loc of locations) {
   if (loc.id === "united-states") continue; // the root page already covers the national view
   const d = cardFor(loc);
   writeFileSync(new URL(`og/${loc.id}.png`, dist), await renderPng(d));
@@ -217,7 +209,7 @@ const xmlEscape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").
 const sitemapUrls = [
   `${SITE}/`,
   `${SITE}/calc`,
-  ...(locations as LocationData[]).filter((l) => l.id !== "united-states").map((l) => `${SITE}/${l.id}`),
+  ...locations.filter((l) => l.id !== "united-states").map((l) => `${SITE}/${l.id}`),
 ];
 const sitemap =
   '<?xml version="1.0" encoding="UTF-8"?>\n' +
