@@ -12,6 +12,7 @@
     "test:watch": "vitest",
     "fetch-data": "node scripts/fetch-data.mjs",
     "fetch-zips": "node scripts/fetch-zips.mjs",
+    "validate-data": "node scripts/validate-data.mjs",
     "render-zip-og": "vite-node scripts/render-zip-og.tsx",
     "typecheck": "tsc -b --noEmit --force"
   },
