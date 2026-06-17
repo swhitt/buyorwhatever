@@ -83,7 +83,10 @@ export function InfoTip({ text }: { text: string }) {
       </button>
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-full z-30 mt-1.5 w-56 max-w-[60vw] -translate-x-1/2 rounded-lg border border-line bg-surface px-3 py-2 text-left text-xs font-normal normal-case leading-snug tracking-normal text-muted opacity-0 shadow-lg transition-opacity group-hover/tip:opacity-100 group-focus-within/tip:opacity-100"
+        // whitespace-normal/break-words are explicit because a label wrapper may set
+        // whitespace-nowrap, which would otherwise make the bubble one long line that
+        // ignores its width and bleeds across the layout.
+        className="pointer-events-none absolute left-1/2 top-full z-30 mt-1.5 w-56 max-w-[60vw] -translate-x-1/2 whitespace-normal break-words rounded-lg border border-line bg-surface px-3 py-2 text-left text-xs font-normal normal-case leading-snug tracking-normal text-muted opacity-0 shadow-lg transition-opacity group-hover/tip:opacity-100 group-focus-within/tip:opacity-100"
       >
         {text}
       </span>
