@@ -32,6 +32,18 @@ describe("fetchLiveMarket", () => {
     expect(await fetchLiveMarket()).toBeNull();
   });
 
+  it("rejects a payload missing the appreciation block the panels read", async () => {
+    const { appreciation: _drop, ...bad } = good;
+    mockFetch(async () => ({ ok: true, json: async () => bad }));
+    expect(await fetchLiveMarket()).toBeNull();
+  });
+
+  it("rejects a payload missing an as-of date the panels render", async () => {
+    const bad = { ...good, national: { ...good.national, asOf: undefined } };
+    mockFetch(async () => ({ ok: true, json: async () => bad }));
+    expect(await fetchLiveMarket()).toBeNull();
+  });
+
   it("returns null on a non-ok HTTP response", async () => {
     mockFetch(async () => ({ ok: false, json: async () => good }));
     expect(await fetchLiveMarket()).toBeNull();

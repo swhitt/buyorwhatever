@@ -14,22 +14,35 @@ const num = (v: unknown): v is number => typeof v === "number" && Number.isFinit
 // couple. A half-written commit or schema drift can yield valid JSON with one
 // missing field, and clamp()/Math.max() on undefined silently produce NaN that
 // then floods the whole sim, defeating the bundled-fallback guarantee.
+const str = (v: unknown): v is string => typeof v === "string" && v.length > 0;
+
 function isMarket(v: unknown): v is MarketData {
   if (!v || typeof v !== "object") return false;
   const m = v as Record<string, unknown>;
   const mortgage = m.mortgage as Record<string, unknown> | undefined;
   const inflation = m.inflation as Record<string, unknown> | undefined;
   const national = m.national as Record<string, unknown> | undefined;
+  const appreciation = m.appreciation as Record<string, unknown> | undefined;
   return (
-    typeof m.asOf === "string" &&
+    str(m.asOf) &&
     !!mortgage &&
     num(mortgage.rate30) &&
     num(mortgage.rate15) &&
+    str(mortgage.asOf) &&
     !!inflation &&
     num(inflation.rate) &&
+    str(inflation.asOf) &&
+    // The Sources and Derivation panels render appreciation and the as-of dates directly off
+    // live data, so a refresh that drops them must fail validation and fall back to the bundled
+    // copy rather than rendering undefined / NaN. (jumboSpread stays optional, hence not checked.)
+    !!appreciation &&
+    num(appreciation.rate1yr) &&
+    num(appreciation.rate5yrCagr) &&
+    str(appreciation.asOf) &&
     !!national &&
     num(national.homeValue) &&
-    num(national.rent)
+    num(national.rent) &&
+    str(national.asOf)
   );
 }
 
