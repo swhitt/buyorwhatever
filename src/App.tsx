@@ -234,6 +234,9 @@ export function App({ initialMetroSlug, initialZip }: { initialMetroSlug?: strin
   const deferredInputs = useDeferredValue(inputsForCalc);
   const sensitivity = useMemo(() => computeSensitivity(deferredInputs), [deferredInputs]);
   const driver = drivingFactor(sensitivity);
+  // How many assumptions can flip the verdict on their own (their breakeven range straddles your
+  // rent). The callouts report this count instead of claiming a single "the one".
+  const flipCount = sensitivity.filter((r) => r.flips).length;
 
   // Monthly owning-vs-renting chart: show the owning line net of the tax benefit by default,
   // toggleable to the gross (pre-benefit) figure.
@@ -639,7 +642,7 @@ export function App({ initialMetroSlug, initialZip }: { initialMetroSlug?: strin
           </section>
 
           <section className="min-w-0 space-y-6">
-            <Verdict result={result} inputs={inputs} driver={driver} />
+            <Verdict result={result} inputs={inputs} driver={driver} flipCount={flipCount} />
 
             {/* Lead with the wealth chart right under the verdict so there's a real graph above
                 the fold. What you're actually worth is the question people feel; the payment and
@@ -733,7 +736,12 @@ export function App({ initialMetroSlug, initialZip }: { initialMetroSlug?: strin
               lead={
                 driver && (
                   <p className="mt-1 text-sm font-medium text-ink">
-                    {driver.flips ? (
+                    {flipCount === 0 ? (
+                      <>
+                        Even the widest swing, <span className="font-semibold">{driver.label.toLowerCase()}</span>, keeps
+                        the verdict the same across a realistic range, so this call is pretty robust.
+                      </>
+                    ) : flipCount === 1 ? (
                       <>
                         Your verdict leans hardest on{" "}
                         <span className="font-semibold">{driver.label.toLowerCase()}</span>, the one assumption here that
@@ -741,8 +749,8 @@ export function App({ initialMetroSlug, initialZip }: { initialMetroSlug?: strin
                       </>
                     ) : (
                       <>
-                        Even the widest swing, <span className="font-semibold">{driver.label.toLowerCase()}</span>,
-                        doesn't change the verdict over a realistic range, so this call is pretty robust.
+                        Close enough that {flipCount} of these assumptions could each flip it on their own,{" "}
+                        <span className="font-semibold">{driver.label.toLowerCase()}</span> most of all.
                       </>
                     )}
                   </p>
@@ -750,9 +758,10 @@ export function App({ initialMetroSlug, initialZip }: { initialMetroSlug?: strin
               }
               note={
                 <>
-                  Each bar swings one uncertain assumption across a realistic range and shows where the breakeven rent
-                  lands. Left of your rent, buying wins; right of it, renting wins. The widest bars are what your verdict
-                  hangs on, and any bar crossing your rent is an assumption that could flip it on its own.
+                  Each bar sweeps one assumption across a realistic range and plots where the breakeven rent (the rent at
+                  which buying and renting tie) lands. A bar sitting left of your rent line means buying wins at that
+                  assumption; right of it, renting wins. The widest bars are what the verdict hangs on, and any bar
+                  straddling your rent line could flip it.
                 </>
               }
             >
@@ -922,10 +931,12 @@ function Verdict({
   result,
   inputs,
   driver,
+  flipCount,
 }: {
   result: CalcResult;
   inputs: AppInputs;
   driver: ReturnType<typeof drivingFactor>;
+  flipCount: number;
 }) {
   const renting = result.verdict === "rent";
   const diff = Math.abs(result.monthlyDifference);
@@ -961,15 +972,20 @@ function Verdict({
           </p>
           {driver && (
             <p className="mt-2 text-xs text-muted">
-              {driver.flips ? (
-                <>
-                  Hinges most on <span className="font-semibold text-ink">{driver.label.toLowerCase()}</span>, which on
-                  its own could flip the answer.
-                </>
-              ) : (
+              {flipCount === 0 ? (
                 <>
                   Pretty robust: even <span className="font-semibold text-ink">{driver.label.toLowerCase()}</span>, the
                   biggest lever, doesn't flip it.
+                </>
+              ) : flipCount === 1 ? (
+                <>
+                  Hinges on <span className="font-semibold text-ink">{driver.label.toLowerCase()}</span>, the one
+                  assumption that could flip the answer on its own.
+                </>
+              ) : (
+                <>
+                  A close call: {flipCount} assumptions could each flip it,{" "}
+                  <span className="font-semibold text-ink">{driver.label.toLowerCase()}</span> most of all.
                 </>
               )}
             </p>

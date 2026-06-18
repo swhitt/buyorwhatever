@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Bar, BarChart, CartesianGrid, Cell, Label, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, Label, ReferenceArea, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
 import { usd } from "../lib/format";
 import { type SensitivityRow } from "../lib/sensitivity";
 import { niceTicks } from "../lib/ticks";
@@ -52,12 +52,24 @@ export function SensitivityChart({ rows, monthlyRent }: { rows: SensitivityRow[]
     return { domain, ticks: niceTicks(domain[0], domain[1]) };
   }, [rows, monthlyRent]);
 
+  const flippers = rows.filter((r) => r.flips).map((r) => r.label.toLowerCase());
+  const ariaLabel =
+    `Tornado chart of breakeven rent. Each bar is how far the breakeven rent moves as one assumption varies, ` +
+    `widest first (${rows[0]?.label}). The dashed line is your rent of ${usd(monthlyRent)}: a bar entirely left of ` +
+    `it means buying wins, entirely right means renting wins, and a bar straddling it could flip the verdict. ` +
+    (flippers.length === 0
+      ? "None can flip it over a realistic range."
+      : `${flippers.length} could each flip it on their own: ${flippers.join(", ")}.`);
+
   return (
     <>
-    <ChartFrame
-      ariaLabel={`Tornado chart: how far the breakeven rent moves as each assumption varies. Widest mover is ${rows[0]?.label}. The dashed line is your rent of ${usd(monthlyRent)}; a bar left of it means buying wins for that range, right of it means renting wins, and a bar crossing it could flip the verdict.`}
-    >
-      <BarChart data={rows} layout="vertical" margin={{ top: 24, right: 12, left: 4, bottom: 0 }} barCategoryGap="28%" accessibilityLayer>
+    <ChartFrame ariaLabel={ariaLabel}>
+      <BarChart data={rows} layout="vertical" margin={{ top: 24, right: 12, left: 4, bottom: 24 }} barCategoryGap="28%" accessibilityLayer>
+        {/* Shade the two verdict sides around your rent line so which side a bar lands on reads
+            pre-attentively, instead of the axis direction implying a winner. Drawn first, behind
+            the grid and bars. ReferenceArea must be a direct child of the chart, not in a <>. */}
+        <ReferenceArea x1={domain[0]} x2={monthlyRent} fill="var(--color-buy)" fillOpacity={0.06} ifOverflow="hidden" />
+        <ReferenceArea x1={monthlyRent} x2={domain[1]} fill="var(--color-rent)" fillOpacity={0.06} ifOverflow="hidden" />
         <CartesianGrid horizontal={false} stroke="var(--color-line)" />
         <XAxis
           type="number"
@@ -67,7 +79,9 @@ export function SensitivityChart({ rows, monthlyRent }: { rows: SensitivityRow[]
           axisLine={{ stroke: "var(--color-line)" }}
           tick={{ fontSize: 12, fill: "var(--color-muted)" }}
           tickFormatter={rentTick}
-        />
+        >
+          <Label value="Breakeven rent ($/mo)" position="insideBottom" offset={-8} fontSize={11} fill="var(--color-muted)" />
+        </XAxis>
         <YAxis
           type="category"
           dataKey="label"
@@ -90,11 +104,11 @@ export function SensitivityChart({ rows, monthlyRent }: { rows: SensitivityRow[]
         </Bar>
       </BarChart>
     </ChartFrame>
-      {/* The x-axis is breakeven rent, so the verdict sides read off the dashed "your rent"
-          line: lower breakeven (left) means buying already wins; higher (right) means renting. */}
-      <div className="mt-2 flex items-center justify-between text-xs">
-        <span className="font-medium text-buy-text">&#9664; buying wins here</span>
-        <span className="font-medium text-rent-text">renting wins here &#9654;</span>
+      {/* Name what each side means: a bar's position is a breakeven rent, so a breakeven landing
+          below your rent (left) favors buying, above it (right) favors renting. */}
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-xs">
+        <span className="font-medium text-buy-text">&#9664; breakeven below your rent: buying wins</span>
+        <span className="font-medium text-rent-text">breakeven above your rent: renting wins &#9654;</span>
       </div>
     </>
   );
